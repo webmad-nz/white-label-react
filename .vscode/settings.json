@@ -1,0 +1,26 @@
+{
+    "prettier.singleQuote": false,
+    "prettier.printWidth": 120,
+    "prettier.tabWidth": 4,
+    "prettier.trailingComma": "all",
+    "prettier.useTabs": false,
+    "prettier.arrowParens": "always",
+    "prettier.jsxSingleQuote": false,
+    "prettier.jsxBracketSameLine": false,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "cSpell.words": [
+        "tscw"
+    ],
+    "python.formatting.provider": "black",
+    "spellright.language": [
+        "en"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ]
+}

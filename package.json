@@ -1,0 +1,51 @@
+{
+    "name": "@amy-app/white-label-react",
+    "version": "0.1.0",
+    "private": false,
+    "dependencies": {
+        "@material-ui/core": "latest",
+        "@material-ui/icons": "latest",
+        "@testing-library/jest-dom": "latest",
+        "@testing-library/react": "latest",
+        "@testing-library/user-event": "latest",
+        "@types/jest": "latest",
+        "@types/node": "latest",
+        "@types/react": "latest",
+        "@types/react-dom": "latest",
+        "@types/react-router-dom": "latest",
+        "react": "latest",
+        "react-dom": "latest",
+        "react-router-dom": "latest",
+        "react-scripts": "latest",
+        "typescript": "latest",
+        "web-vitals": "latest",
+        "cross-var": "latest",
+        "react-firebase-hooks": "latest",
+        "firebase": "latest"
+    },
+    "scripts": {
+        "start": "tsc -b && react-scripts start",
+        "build": "tsc -b && react-scripts build",
+        "test": "cross-var echo $npm_package_name has no test",
+        "eject": "react-scripts eject",
+        "publish:gh": "cross-var echo $npm_package_name has no publish:gh"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}
