@@ -15,6 +15,7 @@ import "firebase/firestore";
 import React, { useState } from "react";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import "./App.css";
+import Page from "./Page";
 
 // TODO Init firebase/amy
 
@@ -63,16 +64,18 @@ function App() {
     // }
 
     return (
-        <>
+        <div style={{ backgroundColor: "#f5f5f5", height: "100vh", width: "100vw" }}>
             <Router>
                 <Header />
                 <Container maxWidth={false} style={{ padding: "20px" }}>
                     <Switch>
-                        <Route path="/">Home</Route>
+                        <Route path="/">
+                            <Page />
+                        </Route>
                     </Switch>
                 </Container>
             </Router>
-        </>
+        </div>
     );
 }
 
