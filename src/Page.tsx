@@ -1,8 +1,6 @@
 import { Button, Card, CardContent, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { default as React } from "react";
-// import CancelIcon from '@material-ui/icons/Cancel';
-// import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const useStyles = makeStyles((theme) => ({
     instruction: {
@@ -22,9 +20,6 @@ const useStyles = makeStyles((theme) => ({
         borderLeft: "8px solid #ff2929",
         border: "1px solid #ff2929",
         borderRadius: "4px",
-    },
-    button: {
-        color: "white",
     },
 }));
 
@@ -56,11 +51,11 @@ export function Option({ options, state }: { options: string[]; state: string })
                 </Grid>
             )}
             {state === "DEFAULT" && (
-                <Grid container justify="flex-end">
+                <Grid container spacing={1} justify="flex-end">
                     {options.map((opt) => {
                         return (
-                            <Grid item xs={12} direction="column">
-                                <Button fullWidth variant="contained" style={{ marginBottom: "5px" }}>
+                            <Grid item xs={12}>
+                                <Button fullWidth variant="contained">
                                     {opt}
                                 </Button>
                             </Grid>
