@@ -1,50 +1,35 @@
-import {
-    Avatar,
-    Button,
-    Card,
-    CardContent,
-    CardHeader,
-    Grid,
-    IconButton,
-    Toolbar,
-    Typography,
-} from "@material-ui/core";
-// import CancelIcon from '@material-ui/icons/Cancel';
-// import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import AppBar from "@material-ui/core/AppBar";
+import { Avatar, Button, Card, CardContent, CardHeader, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { AccountCircle } from "@material-ui/icons";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import { default as React } from "react";
 
 const useStyles = makeStyles((theme) => ({
     instruction: {
-        backgroundColor: "#2d84f7",
-        borderLeft: "8px solid #222c6b",
+        borderLeft: "8px solid #2d84f7",
+        border: "2px solid #2d84f7",
         borderRadius: "4px",
-        color: "#f1f4fe",
-        fontWeight: 500,
     },
     correctOption: {
-        backgroundColor: "#00c200",
-        borderLeft: "8px solid #009105",
+        borderLeft: "8px solid #00c200",
+        border: "2px solid #00c200",
         borderRadius: "4px",
-        color: "#f5fff5",
-        fontWeight: 500,
     },
     incorrectOption: {
-        backgroundColor: "#ff2929",
-        borderLeft: "8px solid #910000",
+        borderLeft: "8px solid #ff2929",
+        border: "2px solid #ff2929",
         borderRadius: "4px",
-        color: "#fff2f2",
-        fontWeight: 500,
+    },
+    defaultOption: {
+        backgroundColor: "#d9d9d9",
+        fontSize: "16px",
+        fontWeight: 600,
     },
 }));
 
 export function Instruction({ inst }: { inst: string }) {
     const classes = useStyles();
     return (
-        <Card square={true} className={classes.instruction}>
+        <Card className={classes.instruction}>
             <CardContent>{inst}</CardContent>
         </Card>
     );
@@ -57,7 +42,7 @@ export function Option({ options, state }: { options: string[]; state: string })
             {state === "CORRECT" && (
                 <Grid container justify="flex-end">
                     <Grid item xs={11}>
-                        <Card square={true} className={classes.correctOption}>
+                        <Card className={classes.correctOption}>
                             <CardContent>{options}</CardContent>
                         </Card>
                     </Grid>
@@ -66,22 +51,18 @@ export function Option({ options, state }: { options: string[]; state: string })
             {state === "INCORRECT" && (
                 <Grid container justify="flex-end">
                     <Grid item xs={11}>
-                        <Card square={true} className={classes.incorrectOption}>
+                        <Card className={classes.incorrectOption}>
                             <CardContent>{options}</CardContent>
                         </Card>
                     </Grid>
                 </Grid>
             )}
             {state === "DEFAULT" && (
-                <Grid container spacing={1} justify="flex-end">
+                <Grid container spacing={1}>
                     {options.map((opt) => {
                         return (
-                            <Grid item xs={12} direction="column">
-                                <Button
-                                    fullWidth
-                                    variant="contained"
-                                    style={{ backgroundColor: "#eef1f5", fontSize: "16px", fontWeight: 600 }}
-                                >
+                            <Grid item xs={12}>
+                                <Button fullWidth variant="contained" className={classes.defaultOption}>
                                     {opt}
                                 </Button>
                             </Grid>
@@ -95,57 +76,39 @@ export function Option({ options, state }: { options: string[]; state: string })
 
 export default function Page() {
     return (
-        <Grid container xs={12} alignItems="center" justify="center">
-            <Grid
-                container
-                xs={7}
-                spacing={2}
-                alignItems="center"
-                justify="center"
-                style={{ backgroundColor: "#fafafa", borderRadius: "10px", paddingBottom: "20px" }}
-            >
-                <AppBar position="static" style={{ borderRadius: "10px 10px 0 0", backgroundColor: "#2d84f7" }}>
-                    <Toolbar>
-                        <Typography style={{ flexGrow: 1 }}>Amy</Typography>
-                        <IconButton>
-                            <AccountCircle />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
-                <Grid item xs={10}>
-                    <CardHeader
-                        style={{
-                            overflowX: "auto",
-                            paddingLeft: 0,
-                            paddingBottom: 0,
-                        }}
-                        avatar={
-                            <Avatar style={{ backgroundColor: "#2d84f7" }}>
-                                <AssignmentIcon />
-                            </Avatar>
-                        }
-                    />
-                </Grid>
-                <Grid item xs={10}>
-                    <Instruction inst="Add 0 and 5 together." />
-                </Grid>
-                <Grid item xs={10}>
-                    <Option options={["0 - 5"]} state="INCORRECT" />
-                </Grid>
+        <Grid container xs={12} spacing={2} alignItems="center" justify="center">
+            <Grid item xs={8}>
+                <CardHeader
+                    style={{
+                        paddingLeft: 0,
+                        paddingBottom: 0,
+                    }}
+                    avatar={
+                        <Avatar style={{ backgroundColor: "#2d84f7" }}>
+                            <AssignmentIcon />
+                        </Avatar>
+                    }
+                />
+            </Grid>
+            <Grid item xs={8}>
+                <Instruction inst="Add 0 and 5 together." />
+            </Grid>
+            <Grid item xs={8}>
+                <Option options={["0 - 5"]} state="INCORRECT" />
+            </Grid>
 
-                <Grid item xs={10}>
-                    <Instruction inst="Close Jurgen, but you subtracted instead of adding, try again." />
-                </Grid>
-                <Grid item xs={10}>
-                    <Option options={["0 + 5"]} state="CORRECT" />
-                </Grid>
+            <Grid item xs={8}>
+                <Instruction inst="Close Jurgen, but you subtracted instead of adding, try again." />
+            </Grid>
+            <Grid item xs={8}>
+                <Option options={["0 + 5"]} state="CORRECT" />
+            </Grid>
 
-                <Grid item xs={10}>
-                    <Instruction inst="Perfect!" />
-                </Grid>
-                <Grid item xs={10}>
-                    <Option options={["7", "2", "5", "9"]} state="DEFAULT" />
-                </Grid>
+            <Grid item xs={8}>
+                <Instruction inst="Perfect!" />
+            </Grid>
+            <Grid item xs={8}>
+                <Option options={["7", "2", "5", "9"]} state="DEFAULT" />
             </Grid>
         </Grid>
     );
