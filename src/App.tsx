@@ -45,6 +45,12 @@ function Header() {
                         </ListItemIcon>
                         <ListItemText primary={"Home"} />
                     </ListItem>
+                    <ListItem button component={Link} to="/page">
+                        <ListItemIcon>
+                            <MailIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={"Page"} />
+                    </ListItem>
                 </List>
             </Drawer>
         </>
@@ -64,14 +70,15 @@ function App() {
     // }
 
     return (
-        <div style={{ backgroundColor: "#f5f5f5", height: "100vh", width: "100vw" }}>
+        <div style={{ backgroundColor: "#ebebeb", height: "100vh", width: "100vw" }}>
             <Router>
                 <Header />
                 <Container maxWidth={false} style={{ padding: "20px" }}>
                     <Switch>
-                        <Route path="/">
-                            <Page />
-                        </Route>
+                        <Route path="/"></Route>
+                    </Switch>
+                    <Switch>
+                        <Route path="/page" component={Page} />
                     </Switch>
                 </Container>
             </Router>
