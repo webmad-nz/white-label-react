@@ -11,9 +11,16 @@
     "editor.codeActionsOnSave": {
         "source.organizeImports": true
     },
-    "cSpell.words": ["tscw"],
+    "cSpell.words": [
+        "tscw"
+    ],
     "python.formatting.provider": "black",
-    "spellright.language": ["en"],
-    "spellright.documentTypes": ["markdown", "latex", "plaintext"],
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+    "spellright.language": [
+        "en"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ]
 }
