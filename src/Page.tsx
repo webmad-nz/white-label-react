@@ -19,27 +19,24 @@ import { default as React } from "react";
 
 const useStyles = makeStyles((theme) => ({
     instruction: {
-        backgroundColor: "#f1f4fe",
-        borderLeft: "8px solid #2d84f7",
-        border: "1px solid #2d84f7",
+        backgroundColor: "#2d84f7",
+        borderLeft: "8px solid #222c6b",
         borderRadius: "4px",
-        color: "#222c6b",
+        color: "#f1f4fe",
         fontWeight: 500,
     },
     correctOption: {
-        backgroundColor: "#f5fff5",
-        borderLeft: "8px solid #00c200",
-        border: "1px solid #00c200",
+        backgroundColor: "#00c200",
+        borderLeft: "8px solid #009105",
         borderRadius: "4px",
-        color: "#009105",
+        color: "#f5fff5",
         fontWeight: 500,
     },
     incorrectOption: {
-        backgroundColor: "#fff2f2",
-        borderLeft: "8px solid #ff2929",
-        border: "1px solid #ff2929",
+        backgroundColor: "#ff2929",
+        borderLeft: "8px solid #910000",
         borderRadius: "4px",
-        color: "#910000",
+        color: "#fff2f2",
         fontWeight: 500,
     },
 }));
