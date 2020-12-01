@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": false,
     "dependencies": {
-        "@amy-app/amy-app-js-sdk": "latest",
+        "@amy-app/amy-app-js-sdk": "file:../AmI/projects/amy-app-js-sdk",
         "@material-ui/core": "latest",
         "@material-ui/icons": "latest",
         "@testing-library/jest-dom": "latest",
@@ -14,15 +14,15 @@
         "@types/react": "latest",
         "@types/react-dom": "latest",
         "@types/react-router-dom": "latest",
+        "cross-var": "latest",
+        "firebase": "latest",
         "react": "latest",
         "react-dom": "latest",
+        "react-firebase-hooks": "latest",
         "react-router-dom": "latest",
         "react-scripts": "latest",
         "typescript": "latest",
-        "web-vitals": "latest",
-        "cross-var": "latest",
-        "react-firebase-hooks": "latest",
-        "firebase": "latest"
+        "web-vitals": "latest"
     },
     "scripts": {
         "start": "tsc -b && react-scripts start",

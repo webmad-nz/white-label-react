@@ -14,20 +14,20 @@ import { default as React, useEffect, useState } from "react";
 const useStyles = makeStyles((theme) => ({
     instruction: {
         backgroundColor: "white",
-        borderLeft: "8px solid #2d84f7",
-        border: "1px solid #2d84f7",
+        borderLeft: "8px solid #3f51b5",
+        border: "1px solid #3f51b5",
         borderRadius: "4px",
     },
     correctOption: {
         backgroundColor: "white",
-        borderLeft: "8px solid #00c200",
-        border: "1px solid #00c200",
+        borderLeft: "8px solid #3fb540",
+        border: "1px solid #3fb540",
         borderRadius: "4px",
     },
     incorrectOption: {
         backgroundColor: "white",
-        borderLeft: "8px solid #ff2929",
-        border: "1px solid #ff2929",
+        borderLeft: "8px solid #b53f3f",
+        border: "1px solid #b53f3f",
         borderRadius: "4px",
     },
 }));
@@ -43,7 +43,6 @@ export function Instruction({ inst }: { inst: string }) {
 
 export function Option({ optionRow }: { optionRow: OptionRow }) {
     const classes = useStyles();
-    // console.log("Option", optionRow);
     if (optionRow.correct === "YES") {
         const o = optionRow.options.find((e) => e.selected);
 
@@ -59,13 +58,12 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
     }
 
     if (optionRow.correct === "NO") {
-        const o = optionRow.options;
-        console.log("o NO", o);
+        const o = optionRow.options.find((e) => e.selected);
         return (
             <Grid container justify="flex-end">
                 <Grid item xs={12} className={classes.incorrectOption}>
                     <Button disabled fullWidth={true}>
-                        "basdf"
+                        {o?.text}
                     </Button>
                 </Grid>
             </Grid>
