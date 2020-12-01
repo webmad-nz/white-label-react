@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": false,
     "dependencies": {
+        "@amy-app/amy-app-js-sdk": "latest",
         "@material-ui/core": "latest",
         "@material-ui/icons": "latest",
         "@testing-library/jest-dom": "latest",
