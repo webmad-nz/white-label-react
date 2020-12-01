@@ -205,26 +205,6 @@ export default function StudentAssignmentPage() {
 
     return (
         <Grid container xs={12} spacing={2} alignItems="center" justify="center">
-            {/* <Grid item xs={8}>
-                <Instruction inst="Add 0 and 5 together." />
-            </Grid>
-            <Grid item xs={8}>
-                <Option options={["0 - 5"]} state="INCORRECT" />
-            </Grid>
-
-            <Grid item xs={8}>
-                <Instruction inst="Close Jurgen, but you subtracted instead of adding, try again." />
-            </Grid>
-            <Grid item xs={8}>
-                <Option options={["0 + 5"]} state="CORRECT" />
-            </Grid>
-
-            <Grid item xs={8}>
-                <Instruction inst="Perfect!" />
-            </Grid>
-            <Grid item xs={8}>
-                <Option options={["7", "2", "5", "9"]} state="DEFAULT" />
-            </Grid> */}
             {bubbles}
         </Grid>
     );
