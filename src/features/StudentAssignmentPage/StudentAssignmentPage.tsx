@@ -6,7 +6,7 @@ import {
     OptionRow,
     StudentAssignment,
 } from "@amy-app/amy-app-js-sdk/dist/src/StudentAssignment";
-import { Button, Card, CardContent, Grid } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase from "firebase";
 import { default as React, useEffect, useState } from "react";
@@ -30,14 +30,22 @@ const useStyles = makeStyles((theme) => ({
         border: "1px solid #b53f3f",
         borderRadius: "4px",
     },
+    unknownOption: {
+        backgroundColor: "white",
+        borderLeft: "8px solid #b5b5b5",
+        border: "1px solid #b5b5b5",
+        borderRadius: "4px",
+    },
 }));
 
 export function Instruction({ inst }: { inst: string }) {
     const classes = useStyles();
     return (
-        <Card square={true} className={classes.instruction}>
-            <CardContent>{inst}</CardContent>
-        </Card>
+        <Grid container spacing={1} justify="flex-end" className={classes.instruction}>
+            <Grid item xs={12}>
+                <Typography variant="body1">{inst}</Typography>
+            </Grid>
+        </Grid>
     );
 }
 
@@ -47,8 +55,8 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
         const o = optionRow.options.find((e) => e.selected);
 
         return (
-            <Grid container justify="flex-end">
-                <Grid item xs={12} className={classes.correctOption}>
+            <Grid container spacing={1} justify="flex-end" className={classes.correctOption}>
+                <Grid item xs={12}>
                     <Button disabled fullWidth={true}>
                         {o?.text}
                     </Button>
@@ -60,8 +68,8 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
     if (optionRow.correct === "NO") {
         const o = optionRow.options.find((e) => e.selected);
         return (
-            <Grid container justify="flex-end">
-                <Grid item xs={12} className={classes.incorrectOption}>
+            <Grid container spacing={1} justify="flex-end" className={classes.incorrectOption}>
+                <Grid item xs={12}>
                     <Button disabled fullWidth={true}>
                         {o?.text}
                     </Button>
@@ -72,12 +80,11 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
 
     if (optionRow.correct === "UNKNOWN") {
         return (
-            <Grid container spacing={1} justify="flex-end">
+            <Grid container spacing={1} justify="flex-end" className={classes.unknownOption}>
                 {optionRow.options.map((o) => {
                     return (
                         <Grid item xs={12} key={o.id}>
                             <Button
-                                color="primary"
                                 fullWidth
                                 variant="outlined"
                                 onClick={() => {
