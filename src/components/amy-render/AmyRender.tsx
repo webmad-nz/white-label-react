@@ -35,8 +35,6 @@ export default function AmyRender(props: Props) {
     if (hasSymetricBrackets(latexifiedText)) {
         const openClosing: InstructionSection[] = getInstructionSections(latexifiedText);
 
-        console.log(openClosing);
-
         openClosing.forEach((value, index) => {
             if (value.type === "graph") {
                 if (ignoreGraphs !== true) {

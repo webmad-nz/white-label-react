@@ -1,5 +1,4 @@
-import { amyConfigs, initializeAmy } from "@amy-app/amy-app-js-sdk";
-import { Amy } from "@amy-app/amy-app-js-sdk/dist/src/Amy";
+import { getAmy } from "@amy-app/amy-app-js-sdk";
 import {
     FeedbackRow,
     InstructionRow,
@@ -8,9 +7,10 @@ import {
 } from "@amy-app/amy-app-js-sdk/dist/src/StudentAssignment";
 import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import firebase from "firebase";
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import DefaultRenderer from "../../components/amy-render/DefaultRenderer";
+import { useReady as useAmyReady } from "../../tools/amyHooks";
 
 const useStyles = makeStyles((theme) => ({
     instruction: {
@@ -104,72 +104,20 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
     return null;
 }
 
-let amy: Amy;
-let firebaseApp: firebase.app.App;
-
-if (firebase.apps.length === 0) {
-    firebaseApp = firebase.initializeApp(amyConfigs, "amy.app");
-} else {
-    firebaseApp = firebase.app("amy.app");
-}
-
-// if (firebase.apps.length === 0) {
-//     firebaseApp = firebase.initializeApp(amyConfigs, "amy.app");
-//     console.log("app name", firebaseApp.name);
-//     amy = initializeAmy({ firebaseApp });
-
-//     amy.readyObserver((ready) => {
-//         console.log("app name", firebaseApp.name);
-//         console.log("ready", ready);
-//     });
-
-// amy.signInViaToken(
-//     "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbS9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlhdCI6MTYwNjgxMTg3NywiZXhwIjoxNjA2ODE1NDc3LCJpc3MiOiJhbXktLWFwcEBhcHBzcG90LmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzdWIiOiJhbXktLWFwcEBhcHBzcG90LmdzZXJ2aWNlYWNjb3VudC5jb20iLCJ1aWQiOiJKYWlwdW5hX2RlbW8xX2RlbW9TdHVkZW50MSIsImNsYWltcyI6eyJzY2hvb2xJZCI6IkphaXB1bmFfZGVtbzEiLCJyb2xlIjoic3R1ZGVudCJ9fQ.Pg734O_ph7ThjqJ9rzuCFMBw4rwxr3mMBOeFnS0l8_zr6r5aUDE8pnq2v9-HotbFngjv0nmXb3RnBe9PWsdxYIytBEwe_2IDY5FzpbW-ClV_DwBGLHtoKH-lPBCUKHcNvAPhyz0VUT7rlz9V8ST10wfbhDIeWLzZKMOeVTffIjyp5LK3Bv1SfgujGz5flFGKrrzcjMc3Ia26NSL2F5ADP90XMYhYiy0HCZLEYNZYUYGXyeMILWHUV_-FhGoklhaMRxtcjhGwOcsqX1LuzPUAoRIH6wvWL2X_c_OGkjQ9T2PguYWuhHSuk-sThEg6WGroddnvs8FBq2LPhNbmHopSbA",
-// );
-// }
-
-amy = initializeAmy({ firebaseApp });
-
 export default function StudentAssignmentPage() {
-    const [ready, setReady] = useState(false);
-    const [studentAssignmentId, setStudentAssignmentId] = useState("");
+    const ready = useAmyReady(getAmy());
+    const { studentAssignmentId } = useParams<{ studentAssignmentId: string }>();
     const [studentAssignment, setStudentAssignment] = useState<StudentAssignment>();
 
     useEffect(() => {
-        amy.readyObserver((_ready) => setReady(_ready));
-    });
-
-    useEffect(() => {
-        if (studentAssignmentId) {
-            console.log("ass id", studentAssignmentId);
-            amy.studentAssignmentObserver(studentAssignmentId, (_studentAssignment) => {
+        if (studentAssignmentId && ready) {
+            getAmy().studentAssignmentObserver(studentAssignmentId, (_studentAssignment) => {
                 setStudentAssignment(_studentAssignment);
             });
         }
-    }, [studentAssignmentId]);
+    }, [studentAssignmentId, ready]);
 
-    if (!ready) {
-        return <>Waiting...</>;
-    }
-
-    if (!studentAssignmentId) {
-        return (
-            <>
-                <Button
-                    variant="outlined"
-                    onClick={() => {
-                        amy.startAssignment(["GRDEMO00001"]).then((_studentAssignmentId) => {
-                            setStudentAssignmentId(_studentAssignmentId);
-                        });
-                    }}
-                >
-                    Start
-                </Button>
-            </>
-        );
-    }
-
-    if (!studentAssignment) {
+    if (!ready || !studentAssignment) {
         return <>Waiting...</>;
     }
 

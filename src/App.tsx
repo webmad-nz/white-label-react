@@ -16,6 +16,7 @@ import "firebase/firestore";
 import React, { useState } from "react";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import "./App.css";
+import Login from "./features/login/Login";
 import StudentAssignmentPage from "./features/StudentAssignmentPage/StudentAssignmentPage";
 
 // if (firebase.apps.length === 0) {
@@ -57,7 +58,13 @@ function Header() {
                         <ListItemIcon>
                             <MailIcon />
                         </ListItemIcon>
-                        <ListItemText primary={"Home"} />
+                        <ListItemText primary={"Login"} />
+                    </ListItem>
+                    <ListItem button component={Link} to="/StudentAssignment">
+                        <ListItemIcon>
+                            <MailIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={"Assignment"} />
                     </ListItem>
                 </List>
             </Drawer>
@@ -83,8 +90,11 @@ function App() {
                 <Header />
                 <Container maxWidth={false} style={{ padding: "20px" }}>
                     <Switch>
-                        <Route path="/">
+                        <Route path="/StudentAssignment/:studentAssignmentId">
                             <StudentAssignmentPage />
+                        </Route>
+                        <Route path="/">
+                            <Login />
                         </Route>
                     </Switch>
                 </Container>
