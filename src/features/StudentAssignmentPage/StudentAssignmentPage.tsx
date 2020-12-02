@@ -9,12 +9,8 @@ import {
 import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase from "firebase";
-import marked from "marked";
 import React, { useEffect, useState } from "react";
-import { BlockMath, InlineMath } from "react-katex";
-import Plot from "react-plotly.js";
-import AmyRender from "../../modules/amy-render/AmyRender";
-import { AmyRenderFuncs } from "../../modules/amy-render/latexUtils";
+import DefaultRenderer from "../../components/amy-render/DefaultRenderer";
 
 const useStyles = makeStyles((theme) => ({
     instruction: {
@@ -45,18 +41,10 @@ const useStyles = makeStyles((theme) => ({
 
 export function Instruction({ inst }: { inst: string }) {
     const classes = useStyles();
-    const renderFuncs: AmyRenderFuncs = {
-        latex: {
-            inline: (key: string, text: string) => <InlineMath key={key} math={text} />,
-            block: (key: string, text: string) => <BlockMath key={key} math={text} />,
-        },
-        plot: (name: string, data: any, layout: any) => <Plot key={name} data={data} layout={layout} />,
-        markdown: marked,
-    };
     return (
         <Grid container spacing={1} justify="flex-end" className={classes.instruction}>
             <Grid item xs={12}>
-                <AmyRender text={inst} config={{}} renderFuncs={renderFuncs} />
+                <DefaultRenderer text={inst} />
             </Grid>
         </Grid>
     );
@@ -64,15 +52,6 @@ export function Instruction({ inst }: { inst: string }) {
 
 export function Option({ optionRow }: { optionRow: OptionRow }) {
     const classes = useStyles();
-    const renderFuncs: AmyRenderFuncs = {
-        latex: {
-            inline: (key: string, text: string) => <InlineMath key={key} math={text} />,
-            block: (key: string, text: string) => <BlockMath key={key} math={text} />,
-        },
-        plot: (name: string, data: any, layout: any) => <Plot key={name} data={data} layout={layout} />,
-        markdown: marked,
-    };
-
     if (optionRow.correct === "YES") {
         const o = optionRow.options.find((e) => e.selected);
 
@@ -80,7 +59,7 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
             <Grid container spacing={1} justify="flex-end" className={classes.correctOption}>
                 <Grid item xs={12}>
                     <Button disabled fullWidth={true}>
-                        <AmyRender text={o?.text} config={{}} renderFuncs={renderFuncs} />
+                        <DefaultRenderer text={o?.text} />
                     </Button>
                 </Grid>
             </Grid>
@@ -93,7 +72,7 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
             <Grid container spacing={1} justify="flex-end" className={classes.incorrectOption}>
                 <Grid item xs={12}>
                     <Button disabled fullWidth={true}>
-                        <AmyRender text={o?.text} config={{}} renderFuncs={renderFuncs} />
+                        <DefaultRenderer text={o?.text} />
                     </Button>
                 </Grid>
             </Grid>
@@ -113,7 +92,7 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
                                     o.select();
                                 }}
                             >
-                                <AmyRender text={o.text} config={{}} renderFuncs={renderFuncs} />
+                                <DefaultRenderer text={o?.text} />
                             </Button>
                         </Grid>
                     );
@@ -177,8 +156,9 @@ export default function StudentAssignmentPage() {
         return (
             <>
                 <Button
+                    variant="outlined"
                     onClick={() => {
-                        amy.startAssignment(["DECI00001"]).then((_studentAssignmentId) => {
+                        amy.startAssignment(["GRDEMO00001"]).then((_studentAssignmentId) => {
                             setStudentAssignmentId(_studentAssignmentId);
                         });
                     }}

@@ -3,8 +3,8 @@ import marked from "marked";
 import React from "react";
 import { BlockMath, InlineMath } from "react-katex";
 import Plot from "react-plotly.js";
-import AmyRender from "./modules/amy-render/AmyRender";
-import { AmyRenderFuncs } from "./modules/amy-render/latexUtils";
+import AmyRender from "./components/amy-render/AmyRender";
+import { AmyRenderFuncs } from "./components/amy-render/latexUtils";
 
 // NOT WORKING
 
