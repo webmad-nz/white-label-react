@@ -1,7 +1,7 @@
 import { Amy } from "@amy-app/amy-app-js-sdk/dist/src/Amy";
 import { useEffect, useState } from "react";
 
-export function useReady(amy: Amy) {
+export function useAmyReady(amy: Amy) {
     const [ready, setReady] = useState(false);
     useEffect(() => {
         if (amy) {

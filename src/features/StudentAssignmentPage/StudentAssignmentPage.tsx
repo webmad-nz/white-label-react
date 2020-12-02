@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DefaultRenderer from "../../components/amy-render/DefaultRenderer";
-import { useReady as useAmyReady } from "../../tools/amyHooks";
+import { useAmyReady } from "../../tools/amyHooks";
 
 const useStyles = makeStyles((theme) => ({
     instruction: {

@@ -2,10 +2,10 @@ import { getAmy } from "@amy-app/amy-app-js-sdk";
 import { Button, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useReady } from "../../tools/amyHooks";
+import { useAmyReady } from "../../tools/amyHooks";
 
 export default function Login() {
-    const ready = useReady(getAmy());
+    const ready = useAmyReady(getAmy());
     const history = useHistory();
     const [token, setToken] = useState("");
     const [archetype, startArchetype] = useState("frac570001");

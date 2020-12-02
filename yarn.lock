@@ -11,8 +11,10 @@
     orbit-camera-controller "^4.0.0"
     turntable-camera-controller "^3.0.0"
 
-"@amy-app/amy-app-js-sdk@file:../AmI/projects/amy-app-js-sdk":
-  version "1.0.7"
+"@amy-app/amy-app-js-sdk@latest":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@amy-app/amy-app-js-sdk/-/amy-app-js-sdk-1.0.9.tgz#df21a9eb5d6afc7a8275278ff6047e33e91a128b"
+  integrity sha512-t9zD1OtV/LtLqyYKE0VFDE/JcXmGhZ5UQsOHHfxyFZlZemDEgV/gewqNKLJYB4kSLZFmwSlg5wTakWCE6pA8mg==
   dependencies:
     "@types/sanitize-html" "^1.27.0"
     firebase latest

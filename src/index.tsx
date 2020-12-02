@@ -1,5 +1,5 @@
 import { amyConfigs, initializeAmy } from "@amy-app/amy-app-js-sdk";
-import firebase from "firebase/app";
+import firebase from "firebase";
 import "firebase/auth";
 import "firebase/database";
 import "firebase/firestore";
@@ -11,6 +11,9 @@ import reportWebVitals from "./reportWebVitals";
 
 let firebaseApp: firebase.app.App = firebase.initializeApp(amyConfigs, "amy.app");
 initializeAmy({ firebaseApp });
+
+//@ts-ignore
+window.firebaseApp = firebaseApp;
 
 ReactDOM.render(
     <React.StrictMode>
