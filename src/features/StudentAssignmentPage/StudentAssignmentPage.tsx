@@ -6,10 +6,15 @@ import {
     OptionRow,
     StudentAssignment,
 } from "@amy-app/amy-app-js-sdk/dist/src/StudentAssignment";
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase from "firebase";
-import { default as React, useEffect, useState } from "react";
+import marked from "marked";
+import React, { useEffect, useState } from "react";
+import { BlockMath, InlineMath } from "react-katex";
+import Plot from "react-plotly.js";
+import AmyRender from "../../modules/amy-render/AmyRender";
+import { AmyRenderFuncs } from "../../modules/amy-render/latexUtils";
 
 const useStyles = makeStyles((theme) => ({
     instruction: {
@@ -40,10 +45,18 @@ const useStyles = makeStyles((theme) => ({
 
 export function Instruction({ inst }: { inst: string }) {
     const classes = useStyles();
+    const renderFuncs: AmyRenderFuncs = {
+        latex: {
+            inline: (key: string, text: string) => <InlineMath key={key} math={text} />,
+            block: (key: string, text: string) => <BlockMath key={key} math={text} />,
+        },
+        plot: (name: string, data: any, layout: any) => <Plot key={name} data={data} layout={layout} />,
+        markdown: marked,
+    };
     return (
         <Grid container spacing={1} justify="flex-end" className={classes.instruction}>
             <Grid item xs={12}>
-                <Typography variant="body1">{inst}</Typography>
+                <AmyRender text={inst} config={{}} renderFuncs={renderFuncs} />
             </Grid>
         </Grid>
     );
@@ -51,6 +64,15 @@ export function Instruction({ inst }: { inst: string }) {
 
 export function Option({ optionRow }: { optionRow: OptionRow }) {
     const classes = useStyles();
+    const renderFuncs: AmyRenderFuncs = {
+        latex: {
+            inline: (key: string, text: string) => <InlineMath key={key} math={text} />,
+            block: (key: string, text: string) => <BlockMath key={key} math={text} />,
+        },
+        plot: (name: string, data: any, layout: any) => <Plot key={name} data={data} layout={layout} />,
+        markdown: marked,
+    };
+
     if (optionRow.correct === "YES") {
         const o = optionRow.options.find((e) => e.selected);
 
@@ -58,7 +80,7 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
             <Grid container spacing={1} justify="flex-end" className={classes.correctOption}>
                 <Grid item xs={12}>
                     <Button disabled fullWidth={true}>
-                        {o?.text}
+                        <AmyRender text={o?.text} config={{}} renderFuncs={renderFuncs} />
                     </Button>
                 </Grid>
             </Grid>
@@ -71,7 +93,7 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
             <Grid container spacing={1} justify="flex-end" className={classes.incorrectOption}>
                 <Grid item xs={12}>
                     <Button disabled fullWidth={true}>
-                        {o?.text}
+                        <AmyRender text={o?.text} config={{}} renderFuncs={renderFuncs} />
                     </Button>
                 </Grid>
             </Grid>
@@ -91,7 +113,7 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
                                     o.select();
                                 }}
                             >
-                                {o.text}
+                                <AmyRender text={o.text} config={{}} renderFuncs={renderFuncs} />
                             </Button>
                         </Grid>
                     );
@@ -122,9 +144,9 @@ if (firebase.apps.length === 0) {
 //         console.log("ready", ready);
 //     });
 
-//     // amy.signInViaToken(
-//     //     "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbS9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlhdCI6MTYwNjgxMTg3NywiZXhwIjoxNjA2ODE1NDc3LCJpc3MiOiJhbXktLWFwcEBhcHBzcG90LmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzdWIiOiJhbXktLWFwcEBhcHBzcG90LmdzZXJ2aWNlYWNjb3VudC5jb20iLCJ1aWQiOiJKYWlwdW5hX2RlbW8xX2RlbW9TdHVkZW50MSIsImNsYWltcyI6eyJzY2hvb2xJZCI6IkphaXB1bmFfZGVtbzEiLCJyb2xlIjoic3R1ZGVudCJ9fQ.Pg734O_ph7ThjqJ9rzuCFMBw4rwxr3mMBOeFnS0l8_zr6r5aUDE8pnq2v9-HotbFngjv0nmXb3RnBe9PWsdxYIytBEwe_2IDY5FzpbW-ClV_DwBGLHtoKH-lPBCUKHcNvAPhyz0VUT7rlz9V8ST10wfbhDIeWLzZKMOeVTffIjyp5LK3Bv1SfgujGz5flFGKrrzcjMc3Ia26NSL2F5ADP90XMYhYiy0HCZLEYNZYUYGXyeMILWHUV_-FhGoklhaMRxtcjhGwOcsqX1LuzPUAoRIH6wvWL2X_c_OGkjQ9T2PguYWuhHSuk-sThEg6WGroddnvs8FBq2LPhNbmHopSbA",
-//     // );
+// amy.signInViaToken(
+//     "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbS9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlhdCI6MTYwNjgxMTg3NywiZXhwIjoxNjA2ODE1NDc3LCJpc3MiOiJhbXktLWFwcEBhcHBzcG90LmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzdWIiOiJhbXktLWFwcEBhcHBzcG90LmdzZXJ2aWNlYWNjb3VudC5jb20iLCJ1aWQiOiJKYWlwdW5hX2RlbW8xX2RlbW9TdHVkZW50MSIsImNsYWltcyI6eyJzY2hvb2xJZCI6IkphaXB1bmFfZGVtbzEiLCJyb2xlIjoic3R1ZGVudCJ9fQ.Pg734O_ph7ThjqJ9rzuCFMBw4rwxr3mMBOeFnS0l8_zr6r5aUDE8pnq2v9-HotbFngjv0nmXb3RnBe9PWsdxYIytBEwe_2IDY5FzpbW-ClV_DwBGLHtoKH-lPBCUKHcNvAPhyz0VUT7rlz9V8ST10wfbhDIeWLzZKMOeVTffIjyp5LK3Bv1SfgujGz5flFGKrrzcjMc3Ia26NSL2F5ADP90XMYhYiy0HCZLEYNZYUYGXyeMILWHUV_-FhGoklhaMRxtcjhGwOcsqX1LuzPUAoRIH6wvWL2X_c_OGkjQ9T2PguYWuhHSuk-sThEg6WGroddnvs8FBq2LPhNbmHopSbA",
+// );
 // }
 
 amy = initializeAmy({ firebaseApp });

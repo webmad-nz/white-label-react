@@ -8,9 +8,9 @@ import AmyPlot from "./AmyPlot";
 import {
     AmyRenderConfig,
     AmyRenderFuncs,
-    findBracketSubString,
+    getInstructionSections,
     hasSymetricBrackets,
-    ITextPosition,
+    InstructionSection,
 } from "./latexUtils";
 
 export interface Props {
@@ -33,7 +33,7 @@ export default function AmyRender(props: Props) {
 
     // only format to latex if all brackets have the same amount of openings + closings
     if (hasSymetricBrackets(latexifiedText)) {
-        const openClosing: ITextPosition[] = findBracketSubString(latexifiedText);
+        const openClosing: InstructionSection[] = getInstructionSections(latexifiedText);
 
         console.log(openClosing);
 
@@ -110,7 +110,7 @@ export default function AmyRender(props: Props) {
 /**
  * Takes all the latex and text textPositions and merges them, returning the JSX.Elements
  * @private
- * @param {ITextPosition[]} text
+ * @param {InstructionSection[]} text
  * @returns {JSX.Element[]}
  */
 function mergeLatexTextIPositions(
@@ -120,7 +120,7 @@ function mergeLatexTextIPositions(
     renderers: AmyRenderFuncs,
 ): JSX.Element {
     let mdReadyText = text;
-    const openClosing = findBracketSubString(text);
+    const openClosing = getInstructionSections(text);
     const { color, useBlockMath, ignoreGraphs } = config;
     const inParagraph = ignoreGraphs !== true;
 
@@ -169,7 +169,7 @@ function mergeLatexTextIPositions(
             <span
                 key={index}
                 className="amymarkdown"
-                style={{ margin: "20px 0", display: "block" }}
+                // style={{ margin: "20px 0", display: "block" }}
                 dangerouslySetInnerHTML={{ __html: mdReadyText }}
             />
         );
