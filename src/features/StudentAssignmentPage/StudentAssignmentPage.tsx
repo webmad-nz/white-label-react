@@ -5,7 +5,7 @@ import {
     OptionRow,
     StudentAssignment,
 } from "@amy-app/amy-app-js-sdk/dist/src/StudentAssignment";
-import { Button, Grid } from "@material-ui/core";
+import { Button, Grid, LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -38,6 +38,105 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: "4px",
     },
 }));
+
+export default function StudentAssignmentPage() {
+    const ready = useAmyReady(getAmy());
+    const [exerciseId, setExerciseId] = useState("");
+    const { studentAssignmentId } = useParams<{ studentAssignmentId: string }>();
+    const [studentAssignment, setStudentAssignment] = useState<StudentAssignment>();
+
+    useEffect(() => {
+        if (studentAssignmentId && ready) {
+            getAmy().studentAssignmentObserver(studentAssignmentId, (_studentAssignment) => {
+                setStudentAssignment(_studentAssignment);
+            });
+        }
+    }, [studentAssignmentId, ready]);
+
+    useEffect(() => {
+        if (studentAssignment && !exerciseId && studentAssignment.ready && !studentAssignment.finished) {
+            // find first unfinished exercise
+            const unfinishedExercise = studentAssignment.exercises.filter((e) => e.finished !== true);
+            if (unfinishedExercise.length > 0) {
+                setExerciseId(unfinishedExercise[0].id);
+            }
+        }
+    }, [studentAssignment]);
+
+    // We wait until amy is ready and the assignment itself is ready
+    if (!ready || !studentAssignment || !studentAssignment.ready || !exerciseId) {
+        return <>Waiting...</>;
+    }
+
+    // in case the assignment is finished we show finished
+    if (studentAssignment.finished) {
+        return <>Assignment Finished</>;
+    }
+
+    const exercise = studentAssignment.exercises.find((e) => e.id === exerciseId);
+    if (!exercise) {
+        return <>Done</>;
+    }
+
+    const bubbles = [];
+
+    for (const row of exercise.rows) {
+        if (row instanceof InstructionRow) {
+            bubbles.push(
+                <Grid item xs={8} key={row.id}>
+                    <Instruction inst={row.text} />
+                </Grid>,
+            );
+        }
+
+        if (row instanceof FeedbackRow) {
+            bubbles.push(
+                <Grid item xs={8} key={row.id}>
+                    <Instruction inst={row.text} />
+                </Grid>,
+            );
+        }
+
+        if (row instanceof OptionRow) {
+            bubbles.push(
+                <Grid item xs={8} key={row.id}>
+                    <Option optionRow={row} />
+                </Grid>,
+            );
+        }
+    }
+
+    let finishButton = <></>;
+    if (exercise.finished) {
+        finishButton = (
+            <Grid item xs={12}>
+                <Button
+                    onClick={() => {
+                        const unfinishedExercise = studentAssignment.exercises.filter((e) => e.finished !== true);
+                        if (unfinishedExercise.length > 0) {
+                            setExerciseId(unfinishedExercise[0].id);
+                        }
+                    }}
+                >
+                    Finished
+                </Button>
+            </Grid>
+        );
+    }
+
+    return (
+        <>
+            <Grid container xs={12} spacing={2} alignItems="center" justify="center">
+                <Grid item xs={12}>
+                    <LinearProgress variant="determinate" value={studentAssignment.progress} />
+                </Grid>
+                {bubbles}
+
+                {finishButton}
+            </Grid>
+        </>
+    );
+}
 
 export function Instruction({ inst }: { inst: string }) {
     const classes = useStyles();
@@ -102,60 +201,4 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
     }
 
     return null;
-}
-
-export default function StudentAssignmentPage() {
-    const ready = useAmyReady(getAmy());
-    const { studentAssignmentId } = useParams<{ studentAssignmentId: string }>();
-    const [studentAssignment, setStudentAssignment] = useState<StudentAssignment>();
-
-    useEffect(() => {
-        if (studentAssignmentId && ready) {
-            getAmy().studentAssignmentObserver(studentAssignmentId, (_studentAssignment) => {
-                setStudentAssignment(_studentAssignment);
-            });
-        }
-    }, [studentAssignmentId, ready]);
-
-    if (!ready || !studentAssignment) {
-        return <>Waiting...</>;
-    }
-
-    const bubbles = [];
-    const exercise = studentAssignment.getFirstUnfinishedExercise();
-    if (!exercise) {
-        return <>Done</>;
-    }
-
-    for (const row of exercise.rows) {
-        if (row instanceof InstructionRow) {
-            bubbles.push(
-                <Grid item xs={8} key={row.id}>
-                    <Instruction inst={row.text} />
-                </Grid>,
-            );
-        }
-
-        if (row instanceof FeedbackRow) {
-            bubbles.push(
-                <Grid item xs={8} key={row.id}>
-                    <Instruction inst={row.text} />
-                </Grid>,
-            );
-        }
-
-        if (row instanceof OptionRow) {
-            bubbles.push(
-                <Grid item xs={8} key={row.id}>
-                    <Option optionRow={row} />
-                </Grid>,
-            );
-        }
-    }
-
-    return (
-        <Grid container xs={12} spacing={2} alignItems="center" justify="center">
-            {bubbles}
-        </Grid>
-    );
 }

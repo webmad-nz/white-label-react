@@ -1,10 +1,8 @@
 import { getAmy } from "@amy-app/amy-app-js-sdk";
 import { Role } from "@amy-app/amy-app-js-sdk/dist/src/Amy";
 import { Course, CourseAssignment, CourseSection } from "@amy-app/amy-app-js-sdk/dist/src/Course";
-
 import { Button, Grid, Typography } from "@material-ui/core";
-import { useEffect, useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAmyReady } from "../../tools/amyHooks";
 
@@ -99,8 +97,8 @@ function SectionTile({ section }: { section: CourseSection | CourseAssignment })
                 </Typography>
             </Grid>
             {section.sections.map((e) => (
-                <Grid item xs={e instanceof CourseSection ? 12 : "auto"}>
-                    <SectionTile section={e} key={e.id} />
+                <Grid item xs={e instanceof CourseSection ? 12 : "auto"} key={e.id}>
+                    <SectionTile section={e} />
                 </Grid>
             )) || <div>Hello</div>}
         </Grid>
