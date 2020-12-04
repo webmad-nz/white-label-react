@@ -13,6 +13,7 @@ export interface Props {
 
 export function AmyDiagram(props: Props) {
     let amySvgDiagramRef: HTMLDivElement;
+    const color = props.config?.color;
     const [svgContainerDimensions, setSvgContainerDimensions] = useState<{
         x: number;
         y: number;
@@ -60,23 +61,28 @@ export function AmyDiagram(props: Props) {
     rawCode = rawCode.replace(/#aaaaaa/g, `rgba(0,0,0,0.25)`);
     rawCode = rawCode.replace(/#AAAAAA/g, `rgba(0,0,0,0.25)`);
 
-    // we need to invert all our colors, so when we invert later for the black -> white the colors look original
-    rawCode = rawCode.replace(/#F24C4C/g, `#6EDCDD`); // red
-    rawCode = rawCode.replace(/#f24c4c/g, `#6EDCDD`); // red
-    rawCode = rawCode.replace(/#F99F3D/g, `#4fb7e4`); // orange
-    rawCode = rawCode.replace(/#f99f3d/g, `#4fb7e4`); // orange
-    rawCode = rawCode.replace(/#DDD200/g, `#8c96f0`); // yellow
-    rawCode = rawCode.replace(/#ddd200/g, `#8c96f0`); // yellow
-    rawCode = rawCode.replace(/#4BE261/g, `#cfa5d7`); // green
-    rawCode = rawCode.replace(/#4be261/g, `#cfa5d7`); // green
-    rawCode = rawCode.replace(/#50B6EF/g, `#d7ab80`); // blue
-    rawCode = rawCode.replace(/#50b6ef/g, `#d7ab80`); // blue
-    rawCode = rawCode.replace(/#AC6DE8/g, `#bcccae`); // indigo / purple
-    rawCode = rawCode.replace(/#ac6de8/g, `#bcccae`); // indigo / purple
-    rawCode = rawCode.replace(/#E46DE8/g, `#a5caad`); // violet
-    rawCode = rawCode.replace(/#e46de8/g, `#a5caad`); // violet
-    rawCode = rawCode.replace(/#99561A/g, `#bad8ef`); // brown
-    rawCode = rawCode.replace(/#99561a/g, `#bad8ef`); // brown
+    if (color === "white") {
+        // we need to invert all our colors, so when we invert later for the black -> white the colors look original
+        rawCode = rawCode.replace(/#F24C4C/g, `#6EDCDD`); // red
+        rawCode = rawCode.replace(/#f24c4c/g, `#6EDCDD`); // red
+        rawCode = rawCode.replace(/#F99F3D/g, `#4fb7e4`); // orange
+        rawCode = rawCode.replace(/#f99f3d/g, `#4fb7e4`); // orange
+        rawCode = rawCode.replace(/#DDD200/g, `#8c96f0`); // yellow
+        rawCode = rawCode.replace(/#ddd200/g, `#8c96f0`); // yellow
+        rawCode = rawCode.replace(/#4BE261/g, `#cfa5d7`); // green
+        rawCode = rawCode.replace(/#4be261/g, `#cfa5d7`); // green
+        rawCode = rawCode.replace(/#50B6EF/g, `#d7ab80`); // blue
+        rawCode = rawCode.replace(/#50b6ef/g, `#d7ab80`); // blue
+        rawCode = rawCode.replace(/#AC6DE8/g, `#bcccae`); // indigo / purple
+        rawCode = rawCode.replace(/#ac6de8/g, `#bcccae`); // indigo / purple
+        rawCode = rawCode.replace(/#E46DE8/g, `#a5caad`); // violet
+        rawCode = rawCode.replace(/#e46de8/g, `#a5caad`); // violet
+        rawCode = rawCode.replace(/#99561A/g, `#bad8ef`); // brown
+        rawCode = rawCode.replace(/#99561a/g, `#bad8ef`); // brown
+    } else {
+        rawCode = rawCode.replace(/#FFFFFF/g, `#000000`); // white -> black
+        rawCode = rawCode.replace(/#ffffff/g, `#000000`); // white -> black
+    }
 
     const SVGsrc = "data:image/svg+xml;base64," + btoa(rawCode);
 
