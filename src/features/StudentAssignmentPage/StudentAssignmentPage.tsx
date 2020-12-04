@@ -4,7 +4,7 @@ import {
     InstructionRow,
     OptionRow,
     StudentAssignment,
-} from "@amy-app/amy-app-js-sdk/src/StudentAssignment";
+} from "@amy-app/amy-app-js-sdk/dist/src/StudentAssignment";
 import { Button, Grid, LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";

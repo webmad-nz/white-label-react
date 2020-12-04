@@ -38,14 +38,9 @@ export default function CoursePage() {
 
     return (
         <Grid container xs={12} spacing={4} style={{ padding: "20px 50px" }}>
-            <Grid item xs={12}>
-                <Typography align="center">
-                    {role.role}@:Course{role.courseId}
-                </Typography>
-            </Grid>
             <Grid item xs={12} style={{ opacity: "0.5" }}>
                 <Typography variant="h5">
-                    {course.name} <hr />
+                    {course.title.get()} <hr />
                 </Typography>
             </Grid>
             {course.sections.map((e) => (
@@ -76,7 +71,7 @@ function SectionTile({ section }: { section: CourseSection | CourseAssignment })
                     padding: "20px 150px 20px 20px",
                 }}
             >
-                {section.id}
+                {section.title.get()}
             </Button>
         );
     }
@@ -84,7 +79,7 @@ function SectionTile({ section }: { section: CourseSection | CourseAssignment })
     if (section.sections.length === 0) {
         return (
             <Grid item xs={12}>
-                CourseSection: {section.id}
+                {section.title.get()}
             </Grid>
         );
     }
@@ -93,14 +88,14 @@ function SectionTile({ section }: { section: CourseSection | CourseAssignment })
         <Grid item xs={12} container>
             <Grid item xs={12}>
                 <Typography variant="h6">
-                    CourseSection: {section.id} <hr />
+                    {section.title.get()} <hr />
                 </Typography>
             </Grid>
             {section.sections.map((e) => (
                 <Grid item xs={e instanceof CourseSection ? 12 : "auto"} key={e.id}>
                     <SectionTile section={e} />
                 </Grid>
-            )) || <div>Hello</div>}
+            ))}
         </Grid>
     );
 }
