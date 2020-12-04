@@ -1,7 +1,7 @@
 import { getAmy } from "@amy-app/amy-app-js-sdk";
 import { Role } from "@amy-app/amy-app-js-sdk/dist/src/Amy";
 import { Course, CourseAssignment, CourseSection } from "@amy-app/amy-app-js-sdk/dist/src/Course";
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Button, Grid, Paper, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAmyReady } from "../../tools/amyHooks";
@@ -46,6 +46,17 @@ export default function CoursePage() {
             {course.sections.map((e) => (
                 <SectionTile section={e} key={e.id} />
             ))}
+
+            <hr />
+
+            <Grid item xs={12}>
+                <AmyButton>Amy botton </AmyButton>
+            </Grid>
+
+            <hr />
+            <Grid item xs={12}>
+                <AmyTile>juhu</AmyTile>
+            </Grid>
         </Grid>
     );
 }
@@ -55,24 +66,15 @@ function SectionTile({ section }: { section: CourseSection | CourseAssignment })
 
     if (section instanceof CourseAssignment) {
         return (
-            <Button
-                variant="contained"
+            <AmyButton
                 onClick={() => {
                     section.start().then((studentAssignmentId) => {
                         history.push(`/StudentAssignment/${studentAssignmentId}`);
                     });
                 }}
-                style={{
-                    backgroundColor: "white",
-                    borderTop: "4px solid #3f51b5",
-                    border: "1px solid #3f51b5",
-                    borderRadius: "4px",
-                    margin: "8px 8px 0 0",
-                    padding: "20px 150px 20px 20px",
-                }}
             >
                 {section.title.get()}
-            </Button>
+            </AmyButton>
         );
     }
 
@@ -85,7 +87,7 @@ function SectionTile({ section }: { section: CourseSection | CourseAssignment })
     }
 
     return (
-        <Grid item xs={12} container>
+        <Grid container>
             <Grid item xs={12}>
                 <Typography variant="h6">
                     {section.title.get()} <hr />
@@ -97,5 +99,54 @@ function SectionTile({ section }: { section: CourseSection | CourseAssignment })
                 </Grid>
             ))}
         </Grid>
+    );
+}
+
+interface AmyButtonProps {
+    onClick?: () => void;
+    children?: React.ReactNode;
+}
+
+function AmyButton(props: AmyButtonProps) {
+    return (
+        <Button
+            fullWidth
+            variant="contained"
+            style={{
+                backgroundColor: "white",
+                borderTop: "4px solid #3f51b5",
+                border: "1px solid #3f51b5",
+                borderRadius: "4px",
+                margin: "8px 8px 0 0",
+                padding: "20px 150px 20px 20px",
+                justifyContent: "left",
+                textTransform: "none",
+            }}
+            onClick={props.onClick}
+        >
+            {props.children}
+        </Button>
+    );
+}
+
+function AmyTile(props: { children?: React.ReactNode }) {
+    return (
+        <Paper elevation={0}>
+            <Grid
+                container
+                style={{
+                    backgroundColor: "white",
+                    borderTop: "4px solid #3f51b5",
+                    border: "1px solid #3f51b5",
+                    borderRadius: "4px",
+                    margin: "8px 8px 0 0",
+                    padding: "20px 150px 20px 20px",
+                }}
+            >
+                <Grid item xs={12}>
+                    {props.children}
+                </Grid>
+            </Grid>
+        </Paper>
     );
 }
