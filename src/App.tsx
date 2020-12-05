@@ -1,4 +1,4 @@
-import { Container, createMuiTheme, LinearProgress, ThemeProvider } from "@material-ui/core";
+import { Container, createMuiTheme, ThemeProvider } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import { green, grey, lightBlue, pink } from "@material-ui/core/colors";
 import Drawer from "@material-ui/core/Drawer";
@@ -21,6 +21,8 @@ import CoursePage from "./features/course/Course";
 import Login from "./features/login/Login";
 import StudentAssignmentPage from "./features/StudentAssignmentPage/StudentAssignmentPage";
 
+// Theme colors can be found here: https://material-ui.com/customization/color/#color
+// The theme elements can found be here: https://material-ui.com/customization/palette/
 const theme = createMuiTheme({
     palette: {
         secondary: {
@@ -77,16 +79,6 @@ function Header() {
 }
 
 function App() {
-    const loading = false;
-    // we show a progress spinner until we know the definite state of the user. which is logged in or not
-    if (loading) {
-        return <LinearProgress />;
-    }
-
-    // if (!user) {
-    //     return <Login />;
-    // }
-
     return (
         <ThemeProvider theme={theme}>
             <Router>
