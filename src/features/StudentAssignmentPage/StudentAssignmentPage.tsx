@@ -83,7 +83,7 @@ export default function StudentAssignmentPage() {
     for (const row of exercise.rows) {
         if (row instanceof InstructionRow) {
             bubbles.push(
-                <Grid item xs={8} key={row.id}>
+                <Grid item xs={12} key={row.id}>
                     <Instruction inst={row.text} />
                 </Grid>,
             );
@@ -91,7 +91,7 @@ export default function StudentAssignmentPage() {
 
         if (row instanceof FeedbackRow) {
             bubbles.push(
-                <Grid item xs={8} key={row.id}>
+                <Grid item xs={12} key={row.id}>
                     <Instruction inst={row.text} />
                 </Grid>,
             );
@@ -99,7 +99,7 @@ export default function StudentAssignmentPage() {
 
         if (row instanceof OptionRow) {
             bubbles.push(
-                <Grid item xs={8} key={row.id}>
+                <Grid item xs={12} key={row.id}>
                     <Option optionRow={row} />
                 </Grid>,
             );
@@ -125,23 +125,21 @@ export default function StudentAssignmentPage() {
     }
 
     return (
-        <>
-            <Grid container xs={12} spacing={2} alignItems="center" justify="center">
-                <Grid item xs={12}>
-                    <LinearProgress variant="determinate" value={studentAssignment.progress} />
-                </Grid>
-                {bubbles}
-
-                {finishButton}
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <LinearProgress variant="determinate" value={studentAssignment.progress} />
             </Grid>
-        </>
+            {bubbles}
+
+            {finishButton}
+        </Grid>
     );
 }
 
 export function Instruction({ inst }: { inst: string }) {
     const classes = useStyles();
     return (
-        <Grid container spacing={1} justify="flex-end" className={classes.instruction}>
+        <Grid container spacing={1} className={classes.instruction}>
             <Grid item xs={12}>
                 <InstructionRender text={inst} />
             </Grid>
@@ -155,7 +153,7 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
         const o = optionRow.options.find((e) => e.selected);
 
         return (
-            <Grid container spacing={1} justify="flex-end" className={classes.correctOption}>
+            <Grid container spacing={1} className={classes.correctOption}>
                 <Grid item xs={12}>
                     <Button disabled fullWidth={true}>
                         <ExpressionRender text={o?.text} />
@@ -168,7 +166,7 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
     if (optionRow.correct === "NO") {
         const o = optionRow.options.find((e) => e.selected);
         return (
-            <Grid container spacing={1} justify="flex-end" className={classes.incorrectOption}>
+            <Grid container spacing={1} className={classes.incorrectOption}>
                 <Grid item xs={12}>
                     <Button disabled fullWidth={true}>
                         <ExpressionRender text={o?.text} />
@@ -180,7 +178,7 @@ export function Option({ optionRow }: { optionRow: OptionRow }) {
 
     if (optionRow.correct === "UNKNOWN") {
         return (
-            <Grid container spacing={1} justify="flex-end" className={classes.unknownOption}>
+            <Grid container spacing={1} className={classes.unknownOption}>
                 {optionRow.options.map((o) => {
                     return (
                         <Grid item xs={12} key={o.id}>

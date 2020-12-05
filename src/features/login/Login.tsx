@@ -15,6 +15,7 @@ export default function Login() {
             <>
                 <TextField
                     label="Token"
+                    value={token}
                     onChange={(e) => {
                         setToken(e.target.value);
                     }}

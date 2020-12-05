@@ -1,7 +1,8 @@
 import { getAmy } from "@amy-app/amy-app-js-sdk";
 import { Role } from "@amy-app/amy-app-js-sdk/dist/src/Amy";
 import { Course, CourseAssignment, CourseSection } from "@amy-app/amy-app-js-sdk/dist/src/Course";
-import { Button, Grid, Paper, Typography } from "@material-ui/core";
+import { Button, Card, CardActionArea, CardHeader, Grid, Paper, Typography } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAmyReady } from "../../tools/amyHooks";
@@ -37,69 +38,144 @@ export default function CoursePage() {
     // course.sections;
 
     return (
-        <Grid container xs={12} spacing={4} style={{ padding: "20px 50px" }}>
-            <Grid item xs={12} style={{ opacity: "0.5" }}>
-                <Typography variant="h5">
-                    {course.title.get()} <hr />
-                </Typography>
+        <Grid container spacing={1}>
+            <Grid item xs={12}>
+                <Typography variant="h4">{course.title.get()}</Typography>
             </Grid>
+
             {course.sections.map((e) => (
-                <SectionTile section={e} key={e.id} />
+                <Grid item xs={12} key={e.id}>
+                    <SectionTile section={e} />
+                </Grid>
             ))}
-
-            <hr />
-
-            <Grid item xs={12}>
-                <AmyButton>Amy botton </AmyButton>
-            </Grid>
-
-            <hr />
-            <Grid item xs={12}>
-                <AmyTile>juhu</AmyTile>
-            </Grid>
         </Grid>
+    );
+
+    return (
+        <>
+            {/* <Typography variant="h5">{course.title.get()}</Typography> */}
+            <Grid container spacing={4}>
+                {course.sections.map((e) => (
+                    <SectionTile section={e} key={e.id} />
+                ))}
+
+                <hr />
+
+                <Grid item xs={12}>
+                    <AmyButton>Amy botton </AmyButton>
+                </Grid>
+
+                <hr />
+                <Grid item xs={12}>
+                    <AmyTile>juhu</AmyTile>
+                </Grid>
+            </Grid>
+
+            <Card>
+                <CardActionArea>
+                    <CardHeader
+                        avatar={<Avatar aria-label="Assignment">A</Avatar>}
+                        title="Shrimp and Chorizo Paella"
+                        subheader="September 14, 2016"
+                    ></CardHeader>
+                </CardActionArea>
+            </Card>
+        </>
     );
 }
 
 function SectionTile({ section }: { section: CourseSection | CourseAssignment }) {
     const history = useHistory();
 
-    if (section instanceof CourseAssignment) {
-        return (
-            <AmyButton
-                onClick={() => {
-                    section.start().then((studentAssignmentId) => {
-                        history.push(`/StudentAssignment/${studentAssignmentId}`);
-                    });
-                }}
-            >
+    const elements = [];
+
+    if (section instanceof CourseSection) {
+        elements.push(
+            <Grid item xs={12} key={section.id}>
                 {section.title.get()}
-            </AmyButton>
+            </Grid>,
         );
+        if (section.sections.length > 0) {
+            for (const s of section.sections) {
+                elements.push(
+                    <Grid item xs={12} key={s.id}>
+                        <SectionTile section={s} />
+                    </Grid>,
+                );
+            }
+        }
     }
 
-    if (section.sections.length === 0) {
-        return (
-            <Grid item xs={12}>
-                {section.title.get()}
-            </Grid>
+    if (section instanceof CourseAssignment) {
+        elements.push(
+            <Grid item xs={12} key={`Sub_${section.id}`}>
+                <Card variant="outlined">
+                    <CardActionArea
+                        onClick={() => {
+                            section.start().then((studentAssignmentId) => {
+                                history.push(`/StudentAssignment/${studentAssignmentId}`);
+                            });
+                        }}
+                    >
+                        <CardHeader
+                            avatar={<Avatar aria-label="Assignment">A</Avatar>}
+                            title={section.title.get()}
+                            subheader={section.subtitle.get()}
+                        ></CardHeader>
+                    </CardActionArea>
+                </Card>
+            </Grid>,
         );
     }
 
     return (
-        <Grid container>
-            <Grid item xs={12}>
-                <Typography variant="h6">
-                    {section.title.get()} <hr />
-                </Typography>
-            </Grid>
-            {section.sections.map((e) => (
-                <Grid item xs={e instanceof CourseSection ? 12 : "auto"} key={e.id}>
-                    <SectionTile section={e} />
-                </Grid>
-            ))}
+        <Grid container spacing={1}>
+            {elements}
         </Grid>
     );
+
+    // if (section instanceof CourseAssignment) {
+    //     return (
+    //         <Card>
+    //             <CardActionArea
+    //                 onClick={() => {
+    //                     section.start().then((studentAssignmentId) => {
+    //                         history.push(`/StudentAssignment/${studentAssignmentId}`);
+    //                     });
+    //                 }}
+    //             >
+    //                 <CardHeader
+    //                     avatar={<Avatar aria-label="Assignment">A</Avatar>}
+    //                     title={section.title.get()}
+    //                     subheader={section.subtitle.get()}
+    //                 ></CardHeader>
+    //             </CardActionArea>
+    //         </Card>
+    //     );
+    // }
+
+    // if (section.sections.length === 0) {
+    //     return (
+    //         <Grid item xs={12}>
+    //             {section.title.get()}
+    //         </Grid>
+    //     );
+    // }
+
+    // return (
+    //     <Grid container spacing={1}>
+    //         <Grid item xs={12}>
+    //             <Typography variant="h6">
+    //                 {section.title.get()} <hr />
+    //             </Typography>
+    //         </Grid>
+    //         {section.sections.map((e) => (
+    //             <Grid item xs={12} key={e.id}>
+    //                 <SectionTile section={e} />
+    //             </Grid>
+    //         ))}
+    //     </Grid>
+    // );
 }
 
 interface AmyButtonProps {
