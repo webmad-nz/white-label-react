@@ -39,6 +39,13 @@ export default function Login() {
 
     return (
         <>
+            Congratulation! You are logged in!. <br />
+            Your <code>UserId</code> is <code>{getAmy().user.uid}</code>
+        </>
+    );
+
+    return (
+        <>
             <TextField
                 label="Archetype"
                 onChange={(e) => {

@@ -1,4 +1,5 @@
 import { amyConfigs, initializeAmy } from "@amy-app/amy-app-js-sdk";
+import { CssBaseline } from "@material-ui/core";
 import firebase from "firebase";
 import "firebase/auth";
 import "firebase/database";
@@ -17,6 +18,7 @@ window.firebaseApp = firebaseApp;
 
 ReactDOM.render(
     <React.StrictMode>
+        <CssBaseline />
         <App />
     </React.StrictMode>,
     document.getElementById("root"),

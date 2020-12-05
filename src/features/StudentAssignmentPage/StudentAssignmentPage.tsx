@@ -14,23 +14,27 @@ import { useAmyReady } from "../../tools/amyHooks";
 
 const useStyles = makeStyles((theme) => ({
     instruction: {
-        borderLeft: "8px solid #3f51b5",
-        border: "1px solid #3f51b5",
+        borderstyle: "solid",
+        borderColor: theme.palette.info.main,
+        borderLeftWidth: "8px",
         paddingLeft: "2px",
     },
     correctOption: {
-        borderLeft: "8px solid #3fb540",
-        border: "1px solid #3fb540",
+        borderstyle: "solid",
+        borderColor: theme.palette.success.main,
+        borderLeftWidth: "8px",
         paddingLeft: "2px",
     },
     incorrectOption: {
-        borderLeft: "8px solid #b53f3f",
-        border: "1px solid #b53f3f",
+        borderstyle: "solid",
+        borderColor: theme.palette.error.main,
+        borderLeftWidth: "8px",
         paddingLeft: "2px",
     },
     unknownOption: {
-        borderLeft: "8px solid #b5b5b5",
-        border: "1px solid #b5b5b5",
+        borderstyle: "solid",
+        borderColor: theme.palette.secondary.main,
+        borderLeftWidth: "8px",
         paddingLeft: "2px",
     },
 }));
