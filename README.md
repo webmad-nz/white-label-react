@@ -2,6 +2,8 @@
 
 Welcome to the off official white label project for `Amy.app`.
 
+<img src="images/amyScreen.png?raw=true" alt="Amy Screenshot" style="max-Height:400px"/>
+
 ## Getting started
 
 To get started, clone the repository (`git clone https://github.com/amy-app/white-label-react.git`) and use `yarn install` or `npm install` to install all dependencies.
