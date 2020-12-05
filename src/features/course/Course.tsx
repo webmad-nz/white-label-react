@@ -50,38 +50,6 @@ export default function CoursePage() {
             ))}
         </Grid>
     );
-
-    return (
-        <>
-            {/* <Typography variant="h5">{course.title.get()}</Typography> */}
-            <Grid container spacing={4}>
-                {course.sections.map((e) => (
-                    <SectionTile section={e} key={e.id} />
-                ))}
-
-                <hr />
-
-                <Grid item xs={12}>
-                    <AmyButton>Amy botton </AmyButton>
-                </Grid>
-
-                <hr />
-                <Grid item xs={12}>
-                    <AmyTile>juhu</AmyTile>
-                </Grid>
-            </Grid>
-
-            <Card>
-                <CardActionArea>
-                    <CardHeader
-                        avatar={<Avatar aria-label="Assignment">A</Avatar>}
-                        title="Shrimp and Chorizo Paella"
-                        subheader="September 14, 2016"
-                    ></CardHeader>
-                </CardActionArea>
-            </Card>
-        </>
-    );
 }
 
 function SectionTile({ section }: { section: CourseSection | CourseAssignment }) {
@@ -133,49 +101,6 @@ function SectionTile({ section }: { section: CourseSection | CourseAssignment })
             {elements}
         </Grid>
     );
-
-    // if (section instanceof CourseAssignment) {
-    //     return (
-    //         <Card>
-    //             <CardActionArea
-    //                 onClick={() => {
-    //                     section.start().then((studentAssignmentId) => {
-    //                         history.push(`/StudentAssignment/${studentAssignmentId}`);
-    //                     });
-    //                 }}
-    //             >
-    //                 <CardHeader
-    //                     avatar={<Avatar aria-label="Assignment">A</Avatar>}
-    //                     title={section.title.get()}
-    //                     subheader={section.subtitle.get()}
-    //                 ></CardHeader>
-    //             </CardActionArea>
-    //         </Card>
-    //     );
-    // }
-
-    // if (section.sections.length === 0) {
-    //     return (
-    //         <Grid item xs={12}>
-    //             {section.title.get()}
-    //         </Grid>
-    //     );
-    // }
-
-    // return (
-    //     <Grid container spacing={1}>
-    //         <Grid item xs={12}>
-    //             <Typography variant="h6">
-    //                 {section.title.get()} <hr />
-    //             </Typography>
-    //         </Grid>
-    //         {section.sections.map((e) => (
-    //             <Grid item xs={12} key={e.id}>
-    //                 <SectionTile section={e} />
-    //             </Grid>
-    //         ))}
-    //     </Grid>
-    // );
 }
 
 interface AmyButtonProps {

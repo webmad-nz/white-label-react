@@ -5,45 +5,42 @@ import {
     OptionRow,
     StudentAssignment,
 } from "@amy-app/amy-app-js-sdk/dist/src/StudentAssignment";
-import { Button, Grid, LinearProgress } from "@material-ui/core";
+import { Card, CardActionArea, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ExpressionRender, InstructionRender } from "../../components/amy-render/DefaultRenderer";
+import { InstructionRender } from "../../components/amy-render/DefaultRenderer";
 import { useAmyReady } from "../../tools/amyHooks";
 
 const useStyles = makeStyles((theme) => ({
     instruction: {
-        backgroundColor: "white",
         borderLeft: "8px solid #3f51b5",
         border: "1px solid #3f51b5",
-        borderRadius: "4px",
+        paddingLeft: "2px",
     },
     correctOption: {
-        backgroundColor: "white",
         borderLeft: "8px solid #3fb540",
         border: "1px solid #3fb540",
-        borderRadius: "4px",
+        paddingLeft: "2px",
     },
     incorrectOption: {
-        backgroundColor: "white",
         borderLeft: "8px solid #b53f3f",
         border: "1px solid #b53f3f",
-        borderRadius: "4px",
+        paddingLeft: "2px",
     },
     unknownOption: {
-        backgroundColor: "white",
         borderLeft: "8px solid #b5b5b5",
         border: "1px solid #b5b5b5",
-        borderRadius: "4px",
+        paddingLeft: "2px",
     },
 }));
 
-export default function StudentAssignmentPage() {
+export default function StudentAssignmentPage2() {
     const ready = useAmyReady(getAmy());
     const [exerciseId, setExerciseId] = useState("");
     const { studentAssignmentId } = useParams<{ studentAssignmentId: string }>();
     const [studentAssignment, setStudentAssignment] = useState<StudentAssignment>();
+    const classes = useStyles();
 
     useEffect(() => {
         if (studentAssignmentId && ready) {
@@ -78,125 +75,67 @@ export default function StudentAssignmentPage() {
         return <>Done</>;
     }
 
-    const bubbles = [];
+    const rows = [];
 
     for (const row of exercise.rows) {
         if (row instanceof InstructionRow) {
-            bubbles.push(
+            rows.push(
                 <Grid item xs={12} key={row.id}>
-                    <Instruction inst={row.text} />
+                    <Card variant="outlined" className={classes.instruction}>
+                        <InstructionRender text={row.text} />
+                    </Card>
                 </Grid>,
             );
         }
 
         if (row instanceof FeedbackRow) {
-            bubbles.push(
+            rows.push(
                 <Grid item xs={12} key={row.id}>
-                    <Instruction inst={row.text} />
+                    <Card variant="outlined" className={classes.instruction}>
+                        <InstructionRender text={row.text} />
+                    </Card>
                 </Grid>,
             );
         }
 
         if (row instanceof OptionRow) {
-            bubbles.push(
-                <Grid item xs={12} key={row.id}>
-                    <Option optionRow={row} />
-                </Grid>,
-            );
+            if (row.correct === "UNKNOWN") {
+                for (const option of row.options) {
+                    rows.push(
+                        <Grid item xs={12} key={option.id}>
+                            <Card variant="outlined" className={classes.unknownOption}>
+                                <CardActionArea
+                                    onClick={() => {
+                                        option.select();
+                                    }}
+                                >
+                                    <InstructionRender text={option.text} />
+                                </CardActionArea>
+                            </Card>
+                        </Grid>,
+                    );
+                }
+            } else {
+                const o = row.options.find((e) => e.selected);
+                rows.push(
+                    <Grid item xs={12} key={o.id}>
+                        <Card
+                            variant="outlined"
+                            className={row.correct === "YES" ? classes.correctOption : classes.incorrectOption}
+                        >
+                            <InstructionRender text={o.text} />
+                        </Card>
+                    </Grid>,
+                );
+            }
         }
     }
 
-    let finishButton = <></>;
-    if (exercise.finished) {
-        finishButton = (
-            <Grid item xs={12}>
-                <Button
-                    onClick={() => {
-                        const unfinishedExercise = studentAssignment.exercises.filter((e) => e.finished !== true);
-                        if (unfinishedExercise.length > 0) {
-                            setExerciseId(unfinishedExercise[0].id);
-                        }
-                    }}
-                >
-                    Finished
-                </Button>
-            </Grid>
-        );
-    }
-
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12}>
-                <LinearProgress variant="determinate" value={studentAssignment.progress} />
-            </Grid>
-            {bubbles}
-
-            {finishButton}
+        <Grid container spacing={1}>
+            {rows}
         </Grid>
     );
-}
 
-export function Instruction({ inst }: { inst: string }) {
-    const classes = useStyles();
-    return (
-        <Grid container spacing={1} className={classes.instruction}>
-            <Grid item xs={12}>
-                <InstructionRender text={inst} />
-            </Grid>
-        </Grid>
-    );
-}
-
-export function Option({ optionRow }: { optionRow: OptionRow }) {
-    const classes = useStyles();
-    if (optionRow.correct === "YES") {
-        const o = optionRow.options.find((e) => e.selected);
-
-        return (
-            <Grid container spacing={1} className={classes.correctOption}>
-                <Grid item xs={12}>
-                    <Button disabled fullWidth={true}>
-                        <ExpressionRender text={o?.text} />
-                    </Button>
-                </Grid>
-            </Grid>
-        );
-    }
-
-    if (optionRow.correct === "NO") {
-        const o = optionRow.options.find((e) => e.selected);
-        return (
-            <Grid container spacing={1} className={classes.incorrectOption}>
-                <Grid item xs={12}>
-                    <Button disabled fullWidth={true}>
-                        <ExpressionRender text={o?.text} />
-                    </Button>
-                </Grid>
-            </Grid>
-        );
-    }
-
-    if (optionRow.correct === "UNKNOWN") {
-        return (
-            <Grid container spacing={1} className={classes.unknownOption}>
-                {optionRow.options.map((o) => {
-                    return (
-                        <Grid item xs={12} key={o.id}>
-                            <Button
-                                fullWidth
-                                variant="outlined"
-                                onClick={() => {
-                                    o.select();
-                                }}
-                            >
-                                <ExpressionRender text={o?.text} />
-                            </Button>
-                        </Grid>
-                    );
-                })}
-            </Grid>
-        );
-    }
-
-    return null;
+    return <>Let's do something</>;
 }
