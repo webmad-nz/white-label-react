@@ -1,6 +1,4 @@
-import { getAmy } from "@amy-app/amy-app-js-sdk";
-import { Role } from "@amy-app/amy-app-js-sdk/dist/src/Amy";
-import { Course, CourseAssignment, CourseSection } from "@amy-app/amy-app-js-sdk/dist/src/Course";
+import { Amy, Courses, getAmy } from "@amy-app/amy-app-js-sdk";
 import { Button, Card, CardActionArea, CardHeader, Grid, Paper, Typography } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import React, { useEffect, useState } from "react";
@@ -9,8 +7,8 @@ import { useAmyReady } from "../../tools/amyHooks";
 
 export default function CoursePage() {
     const ready = useAmyReady(getAmy());
-    const [role, setRole] = useState<Role>();
-    const [course, setCourse] = useState<Course>();
+    const [role, setRole] = useState<Amy.Role>();
+    const [course, setCourse] = useState<Courses.Course>();
 
     useEffect(() => {
         if (ready) {
@@ -52,12 +50,12 @@ export default function CoursePage() {
     );
 }
 
-function SectionTile({ section }: { section: CourseSection | CourseAssignment }) {
+function SectionTile({ section }: { section: Courses.CourseSection | Courses.CourseAssignment }) {
     const history = useHistory();
 
     const elements = [];
 
-    if (section instanceof CourseSection) {
+    if (section instanceof Courses.CourseSection) {
         elements.push(
             <Grid item xs={12} key={section.id}>
                 {section.title.get()}
@@ -74,7 +72,7 @@ function SectionTile({ section }: { section: CourseSection | CourseAssignment })
         }
     }
 
-    if (section instanceof CourseAssignment) {
+    if (section instanceof Courses.CourseAssignment) {
         elements.push(
             <Grid item xs={12} key={`Sub_${section.id}`}>
                 <Card variant="outlined">

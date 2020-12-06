@@ -1,10 +1,4 @@
-import { getAmy } from "@amy-app/amy-app-js-sdk";
-import {
-    FeedbackRow,
-    InstructionRow,
-    OptionRow,
-    StudentAssignment,
-} from "@amy-app/amy-app-js-sdk/dist/src/StudentAssignment";
+import { getAmy, StudentAssignment } from "@amy-app/amy-app-js-sdk";
 import { Card, CardActionArea, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
@@ -43,7 +37,7 @@ export default function StudentAssignmentPage2() {
     const ready = useAmyReady(getAmy());
     const [exerciseId, setExerciseId] = useState("");
     const { studentAssignmentId } = useParams<{ studentAssignmentId: string }>();
-    const [studentAssignment, setStudentAssignment] = useState<StudentAssignment>();
+    const [studentAssignment, setStudentAssignment] = useState<StudentAssignment.StudentAssignment>();
     const classes = useStyles();
 
     useEffect(() => {
@@ -82,7 +76,7 @@ export default function StudentAssignmentPage2() {
     const rows = [];
 
     for (const row of exercise.rows) {
-        if (row instanceof InstructionRow) {
+        if (row instanceof StudentAssignment.InstructionRow) {
             rows.push(
                 <Grid item xs={12} key={row.id}>
                     <Card variant="outlined" className={classes.instruction}>
@@ -92,7 +86,7 @@ export default function StudentAssignmentPage2() {
             );
         }
 
-        if (row instanceof FeedbackRow) {
+        if (row instanceof StudentAssignment.FeedbackRow) {
             rows.push(
                 <Grid item xs={12} key={row.id}>
                     <Card variant="outlined" className={classes.instruction}>
@@ -102,7 +96,7 @@ export default function StudentAssignmentPage2() {
             );
         }
 
-        if (row instanceof OptionRow) {
+        if (row instanceof StudentAssignment.OptionRow) {
             if (row.correct === "UNKNOWN") {
                 for (const option of row.options) {
                     rows.push(
