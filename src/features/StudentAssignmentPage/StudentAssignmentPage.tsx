@@ -51,9 +51,9 @@ export default function StudentAssignmentPage2() {
     useEffect(() => {
         if (studentAssignment && !exerciseId && studentAssignment.ready && !studentAssignment.finished) {
             // find first unfinished exercise
-            const unfinishedExercise = studentAssignment.exercises.filter((e) => e.finished !== true);
-            if (unfinishedExercise.length > 0) {
-                setExerciseId(unfinishedExercise[0].id);
+            const unfinishedExercise = studentAssignment.exercises.find((e) => e.finished !== true);
+            if (unfinishedExercise) {
+                setExerciseId(unfinishedExercise.id);
             }
         }
     }, [studentAssignment]);
@@ -100,7 +100,7 @@ export default function StudentAssignmentPage2() {
             if (row.correct === "UNKNOWN") {
                 for (const option of row.options) {
                     rows.push(
-                        <Grid item xs={12} key={option.id}>
+                        <Grid item xs={12} key={`${row.id}_${option.id}`}>
                             <Card variant="outlined" className={classes.unknownOption}>
                                 <CardActionArea
                                     onClick={() => {
@@ -116,7 +116,7 @@ export default function StudentAssignmentPage2() {
             } else {
                 const o = row.options.find((e) => e.selected);
                 rows.push(
-                    <Grid item xs={12} key={o.id}>
+                    <Grid item xs={12} key={`selected_${row.id}_${o.id}`}>
                         <Card
                             variant="outlined"
                             className={row.correct === "YES" ? classes.correctOption : classes.incorrectOption}
@@ -129,11 +129,30 @@ export default function StudentAssignmentPage2() {
         }
     }
 
+    // Exercise has finished
+    if (exercise.finished) {
+        rows.push(
+            <Grid item xs={12} key={`finished_${exercise.id}`}>
+                <Card variant="outlined" className={classes.unknownOption}>
+                    <CardActionArea
+                        onClick={() => {
+                            // select next exercise
+                            const unfinishedExercise = studentAssignment.exercises.find((e) => e.finished !== true);
+                            if (unfinishedExercise) {
+                                setExerciseId(unfinishedExercise.id);
+                            }
+                        }}
+                    >
+                        <InstructionRender text={"Next"} />
+                    </CardActionArea>
+                </Card>
+            </Grid>,
+        );
+    }
+
     return (
         <Grid container spacing={1}>
             {rows}
         </Grid>
     );
-
-    return <>Let's do something</>;
 }
