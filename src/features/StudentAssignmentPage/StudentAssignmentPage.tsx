@@ -115,16 +115,18 @@ export default function StudentAssignmentPage2() {
                 }
             } else {
                 const o = row.options.find((e) => e.selected);
-                rows.push(
-                    <Grid item xs={12} key={`selected_${row.id}_${o.id}`}>
-                        <Card
-                            variant="outlined"
-                            className={row.correct === "YES" ? classes.correctOption : classes.incorrectOption}
-                        >
-                            <InstructionRender text={o.text} />
-                        </Card>
-                    </Grid>,
-                );
+                if (o) {
+                    rows.push(
+                        <Grid item xs={12} key={`selected_${row.id}_${o.id}`}>
+                            <Card
+                                variant="outlined"
+                                className={row.correct === "YES" ? classes.correctOption : classes.incorrectOption}
+                            >
+                                <InstructionRender text={o.text} />
+                            </Card>
+                        </Grid>,
+                    );
+                }
             }
         }
     }

@@ -22,8 +22,6 @@ export default function CoursePage() {
         if (role) {
             // console.log("role", role);
             getAmy().courseObserver(role, (_course) => {
-                console.log("course", _course);
-                console.log("user", getAmy().user.uid);
                 setCourse(_course);
             });
         }
