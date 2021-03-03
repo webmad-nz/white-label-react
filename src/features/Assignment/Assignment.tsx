@@ -1,10 +1,10 @@
-import { getAmy, StudentAssignment } from "@amy-app/amy-app-js-sdk";
+import { Models, StudentAssignment } from "@amy-app/amy-app-js-sdk";
 import { Card, CardActionArea, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { InstructionRender } from "../../components/amy-render/DefaultRenderer";
-import { useAmyReady } from "../../tools/amyHooks";
+import { useStudentAssignment } from "../../tools/amyHooks";
 
 const useStyles = makeStyles((theme) => ({
     bubble: {
@@ -32,12 +32,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function StudentAssignmentPage2() {
-    const ready = useAmyReady(getAmy());
     const [exerciseId, setExerciseId] = useState("");
     const { studentAssignmentId } = useParams<{ studentAssignmentId: string }>();
-    const [studentAssignment, setStudentAssignment] = useState<StudentAssignment.StudentAssignment>();
+    const { studentAssignment, exercises, rows } = useStudentAssignment(studentAssignmentId);
     const [questionBubbleHeight, setQuestionBubbleheight] = useState(100);
-
     const classes = useStyles();
 
     // Save the question height, lets us calculate how to make it stick to top of screen
@@ -49,25 +47,17 @@ export default function StudentAssignmentPage2() {
     });
 
     useEffect(() => {
-        if (studentAssignmentId && ready) {
-            getAmy().studentAssignmentObserver(studentAssignmentId, (_studentAssignment) => {
-                setStudentAssignment(_studentAssignment);
-            });
-        }
-    }, [studentAssignmentId, ready]);
-
-    useEffect(() => {
-        if (studentAssignment && !exerciseId && studentAssignment.ready && !studentAssignment.finished) {
+        if (studentAssignment && !exerciseId && !studentAssignment.finished) {
             // find first unfinished exercise
-            const unfinishedExercise = studentAssignment.exercises.find((e) => e.finished !== true);
+            const unfinishedExercise = exercises.find((e) => !e.finished);
             if (unfinishedExercise) {
-                setExerciseId(unfinishedExercise.id);
+                setExerciseId(unfinishedExercise.exerciseId);
             }
         }
     }, [studentAssignment]);
 
     // We wait until amy is ready and the assignment itself is ready
-    if (!ready || !studentAssignment || !studentAssignment.ready || !exerciseId) {
+    if (!studentAssignment || !exerciseId) {
         return <>Waiting...</>;
     }
 
@@ -76,24 +66,25 @@ export default function StudentAssignmentPage2() {
         return <>Assignment Finished</>;
     }
 
-    const exercise = studentAssignment.exercises.find((e) => e.id === exerciseId);
+    const exercise = studentAssignment.exercises.find((e) => e.exerciseId === exerciseId);
     if (!exercise) {
         return <>Done</>;
     }
 
     // find the most recent correct bubble so we can stick it to the top of the screen
-    const latestCorrect = [...exercise.rows]
+    const latestCorrect = rows
+        .filter((e) => e.exerciseId === exerciseId)
         .reverse()
-        .find((row) => row instanceof StudentAssignment.OptionRow && row.correct === "YES");
+        .find((row) => row instanceof Models.OptionRow && row.correct === "YES");
 
-    const rows = [];
-    for (const row of exercise.rows) {
-        if (row instanceof StudentAssignment.InstructionRow) {
-            rows.push(
+    const rowsItems: JSX.Element[] = [];
+    for (const row of rows.filter((e) => e.exerciseId === exerciseId)) {
+        if (row instanceof Models.InstructionRow) {
+            rowsItems.push(
                 <Grid
                     item
                     xs={12}
-                    key={row.id}
+                    key={row.rowId}
                     ref={questionBubbleRef}
                     className={questionBubbleHeight < 200 ? classes.stickyBubble : ""}
                 >
@@ -104,9 +95,9 @@ export default function StudentAssignmentPage2() {
             );
         }
 
-        if (row instanceof StudentAssignment.FeedbackRow) {
-            rows.push(
-                <Grid item xs={12} key={row.id}>
+        if (row instanceof Models.FeedbackRow) {
+            rowsItems.push(
+                <Grid item xs={12} key={row.rowId}>
                     <Card variant="outlined" className={`${classes.bubble} ${classes.instruction}`}>
                         <InstructionRender text={row.text} />
                     </Card>
@@ -114,15 +105,15 @@ export default function StudentAssignmentPage2() {
             );
         }
 
-        if (row instanceof StudentAssignment.OptionRow) {
+        if (row instanceof Models.OptionRow) {
             if (row.correct === "UNKNOWN") {
                 for (const option of row.options) {
-                    rows.push(
-                        <Grid item xs={12} key={`${row.id}_${option.id}`}>
+                    rowsItems.push(
+                        <Grid item xs={12} key={`${row.rowId}_${option.optionId}`}>
                             <Card variant="outlined" className={`${classes.bubble} ${classes.unknownOption}`}>
                                 <CardActionArea
                                     onClick={() => {
-                                        option.select();
+                                        StudentAssignment.selectOption({ optionRow: row, option });
                                     }}
                                 >
                                     <InstructionRender text={option.text} />
@@ -134,11 +125,11 @@ export default function StudentAssignmentPage2() {
             } else {
                 const o = row.options.find((e) => e.selected);
                 if (o) {
-                    rows.push(
+                    rowsItems.push(
                         <Grid
                             item
                             xs={12}
-                            key={`selected_${row.id}_${o.id}`}
+                            key={`selected_${row.rowId}_${o.optionId}`}
                             className={row === latestCorrect ? classes.stickyBubble : ""}
                             style={
                                 row === latestCorrect
@@ -165,15 +156,15 @@ export default function StudentAssignmentPage2() {
 
     // Exercise has finished
     if (exercise.finished) {
-        rows.push(
-            <Grid item xs={12} key={`finished_${exercise.id}`}>
+        rowsItems.push(
+            <Grid item xs={12} key={`finished_${exercise.exerciseId}`}>
                 <Card variant="outlined" className={`${classes.bubble} ${classes.unknownOption}`}>
                     <CardActionArea
                         onClick={() => {
                             // select next exercise
                             const unfinishedExercise = studentAssignment.exercises.find((e) => e.finished !== true);
                             if (unfinishedExercise) {
-                                setExerciseId(unfinishedExercise.id);
+                                setExerciseId(unfinishedExercise.exerciseId);
                             }
                         }}
                     >
@@ -186,7 +177,7 @@ export default function StudentAssignmentPage2() {
 
     return (
         <Grid container spacing={1}>
-            {rows}
+            {rowsItems}
         </Grid>
     );
 }

@@ -1,92 +1,52 @@
-import { Amy, Courses, getAmy } from "@amy-app/amy-app-js-sdk";
-import { Button, Card, CardActionArea, CardHeader, Grid, Paper, Typography } from "@material-ui/core";
-import Avatar from "@material-ui/core/Avatar";
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useAmyReady } from "../../tools/amyHooks";
+import { Course, Models } from "@amy-app/amy-app-js-sdk";
+import { Avatar, CardActionArea, Grid, LinearProgress } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import AssignmentIcon from "@material-ui/icons/CreateNewFolder";
+import { useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { InstructionRender } from "../../components/amy-render/DefaultRenderer";
+import { useCourse, useCourseSection } from "../../tools/amyHooks";
 
-export default function CoursePage() {
-    const ready = useAmyReady(getAmy());
-    const [role, setRole] = useState<Amy.Role>();
-    const [course, setCourse] = useState<Courses.Course>();
+export default function CourseComponent() {
+    const location = useLocation();
+    const splitPath = location.pathname
+        .replace("/Courses", "")
+        .split("/")
+        .filter((e) => !!e);
 
-    useEffect(() => {
-        if (ready) {
-            // console.log("user", getAmy().user);
-            const r = getAmy().roles[0];
-            setRole(r);
-        }
-    }, [ready]);
-
-    useEffect(() => {
-        if (role) {
-            // console.log("role", role);
-            getAmy().courseObserver(role, (_course) => {
-                setCourse(_course);
-            });
-        }
-    }, [role]);
-
-    if (!ready || !role || !course) {
-        return <>Waiting...</>;
-    }
-
-    // course.sections;
-
-    return (
-        <Grid container spacing={1}>
-            <Grid item xs={12}>
-                <Typography variant="h4">{course.title.get()}</Typography>
-            </Grid>
-
-            {course.sections.map((e) => (
-                <Grid item xs={12} key={e.id}>
-                    <SectionTile section={e} />
-                </Grid>
-            ))}
-        </Grid>
-    );
-}
-
-function SectionTile({ section }: { section: Courses.CourseSection | Courses.CourseAssignment }) {
+    const courseId = splitPath[0];
+    let parentCourseSectionId = splitPath.reverse()[0];
+    const { course } = useCourse(courseId);
+    const { assignments, sections } = useCourseSection(courseId, parentCourseSectionId);
     const history = useHistory();
 
-    const elements = [];
+    const gridItems: JSX.Element[] = [];
 
-    if (section instanceof Courses.CourseSection) {
-        elements.push(
-            <Grid item xs={12} key={section.id}>
-                {section.title.get()}
-            </Grid>,
-        );
-        if (section.sections.length > 0) {
-            for (const s of section.sections) {
-                elements.push(
-                    <Grid item xs={12} key={s.id}>
-                        <SectionTile section={s} />
-                    </Grid>,
-                );
-            }
-        }
-    }
-
-    if (section instanceof Courses.CourseAssignment) {
-        elements.push(
-            <Grid item xs={12} key={`Sub_${section.id}`}>
-                <Card variant="outlined">
+    for (const section of sections) {
+        gridItems.push(
+            <Grid item xs={6} key={section.courseSectionId}>
+                <Card>
                     <CardActionArea
                         onClick={() => {
-                            section.start().then((studentAssignmentId) => {
-                                history.push(`/StudentAssignment/${studentAssignmentId}`);
-                            });
+                            history.push(`${window.location.pathname}/${section.courseSectionId}`);
                         }}
                     >
                         <CardHeader
-                            avatar={<Avatar aria-label="Assignment">A</Avatar>}
-                            title={section.title.get()}
-                            subheader={section.subtitle.get()}
-                        ></CardHeader>
+                            title={section.title.get("en")}
+                            subheader={section.subtitle.get("en") || " space"}
+                        />
                     </CardActionArea>
+                </Card>
+            </Grid>,
+        );
+    }
+
+    for (const assignment of assignments) {
+        gridItems.push(
+            <Grid item xs={6} key={assignment.courseAssignmentId}>
+                <Card>
+                    <AssignmentItem assignment={assignment} course={course} />
                 </Card>
             </Grid>,
         );
@@ -94,56 +54,45 @@ function SectionTile({ section }: { section: Courses.CourseSection | Courses.Cou
 
     return (
         <Grid container spacing={1}>
-            {elements}
+            {gridItems}
         </Grid>
     );
 }
 
-interface AmyButtonProps {
-    onClick?: () => void;
-    children?: React.ReactNode;
-}
+function AssignmentItem({ assignment, course }: { assignment: Models.CourseAssignment; course: Models.Course }) {
+    const [loading, setLoading] = useState(false);
+    const history = useHistory();
 
-function AmyButton(props: AmyButtonProps) {
     return (
-        <Button
-            fullWidth
-            variant="contained"
-            style={{
-                backgroundColor: "white",
-                borderTop: "4px solid #3f51b5",
-                border: "1px solid #3f51b5",
-                borderRadius: "4px",
-                margin: "8px 8px 0 0",
-                padding: "20px 150px 20px 20px",
-                justifyContent: "left",
-                textTransform: "none",
-            }}
-            onClick={props.onClick}
-        >
-            {props.children}
-        </Button>
-    );
-}
+        <Card>
+            {!loading && <LinearProgress color="primary" variant="determinate" value={5} />}
+            {loading && <LinearProgress color="primary" variant="indeterminate" />}
 
-function AmyTile(props: { children?: React.ReactNode }) {
-    return (
-        <Paper elevation={0}>
-            <Grid
-                container
-                style={{
-                    backgroundColor: "white",
-                    borderTop: "4px solid #3f51b5",
-                    border: "1px solid #3f51b5",
-                    borderRadius: "4px",
-                    margin: "8px 8px 0 0",
-                    padding: "20px 150px 20px 20px",
+            <CardActionArea
+                onClick={() => {
+                    setLoading(true);
+                    Course.getStudentAssignmentId({
+                        course,
+                        courseAssignmentId: assignment.courseAssignmentId,
+                    })
+                        .then(({ studentAssignmentId }) => {
+                            history.push(`/Assignments/${studentAssignmentId}`);
+                        })
+                        .finally(() => {
+                            setLoading(false);
+                        });
                 }}
             >
-                <Grid item xs={12}>
-                    {props.children}
-                </Grid>
-            </Grid>
-        </Paper>
+                <CardHeader
+                    avatar={
+                        <Avatar>
+                            <AssignmentIcon />
+                        </Avatar>
+                    }
+                    title={<InstructionRender text={assignment.title.get("en")} />}
+                    subheader={assignment.subtitle.get("en") || " space"}
+                />
+            </CardActionArea>
+        </Card>
     );
 }

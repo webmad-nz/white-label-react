@@ -17,9 +17,11 @@ import "firebase/firestore";
 import React, { useState } from "react";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import "./App.css";
-import CoursePage from "./features/course/Course";
+import StudentAssignmentPage from "./features/Assignment/Assignment";
+import CourseComponent from "./features/Course/Course";
+import Courses from "./features/Courses/Courses";
+// import CoursePage from "./features/course/Course";
 import Login from "./features/login/Login";
-import StudentAssignmentPage from "./features/StudentAssignmentPage/StudentAssignmentPage";
 
 // Theme colors can be found here: https://material-ui.com/customization/color/#color
 // The theme elements can found be here: https://material-ui.com/customization/palette/
@@ -66,11 +68,11 @@ function Header() {
                         </ListItemIcon>
                         <ListItemText primary={"Login"} />
                     </ListItem>
-                    <ListItem button component={Link} to="/Course">
+                    <ListItem button component={Link} to="/Courses">
                         <ListItemIcon>
                             <MailIcon />
                         </ListItemIcon>
-                        <ListItemText primary={"Course"} />
+                        <ListItemText primary={"Courses"} />
                     </ListItem>
                 </List>
             </Drawer>
@@ -85,11 +87,20 @@ function App() {
                 <Header />
                 <Container maxWidth={false} style={{ padding: "20px" }}>
                     <Switch>
-                        <Route path="/StudentAssignment/:studentAssignmentId">
+                        <Route path="/Assignments/:studentAssignmentId">
+                            <StudentAssignmentPage />
+                        </Route>
+                        {/* <Route path="/StudentAssignment/:studentAssignmentId">
                             <StudentAssignmentPage />
                         </Route>
                         <Route path="/Course">
                             <CoursePage />
+                        </Route> */}
+                        <Route path="/Courses/*">
+                            <CourseComponent />
+                        </Route>
+                        <Route path="/Courses">
+                            <Courses />
                         </Route>
                         <Route path="/">
                             <Login />
