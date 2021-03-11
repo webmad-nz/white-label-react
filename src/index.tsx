@@ -1,49 +1,95 @@
-import { Amy } from "@amy-app/amy-app-js-sdk";
-import { CssBaseline } from "@material-ui/core";
+import { Amy } from "@amy-app/js-sdk";
+import { AppPage, createAmyTheme } from "@amy-app/react-components";
+import { Button, CssBaseline, TextField } from "@material-ui/core";
 import "firebase/auth";
 import "firebase/database";
 import "firebase/firestore";
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
-// let conf = Amy.amyConfigs;
-// if (process.env.REACT_APP_USE_EMULATOR === "true" || true) {
-//     conf = {
-//         apiKey: "AIzaSyD4Y4Rb1detiPVFjoHtbhaSxWOo7KiEKjQ",
-//         // @ts-ignore
-//         authDomain: "dev1-amy-app.firebaseapp.com",
-//         databaseURL: "https://dev1-amy-app.firebaseio.com",
-//         projectId: "dev1-amy-app",
-//         storageBucket: "dev1-amy-app.appspot.com",
-//         messagingSenderId: "712940000014",
-//         appId: "1:712940000014:web:cc63c7d4c00e4ab9",
-//     };
-// }
-
-// let firebaseApp: firebase.app.App = firebase.initializeApp(conf, "amy.app");
-
-// if (process.env.REACT_APP_USE_EMULATOR === "true") {
-//     firebaseApp.auth().useEmulator("http://localhost:9099/");
-//     firebaseApp.database().useEmulator("localhost", 9000);
-//     firebaseApp.firestore().useEmulator("localhost", 8080);
-//     firebaseApp.functions().useEmulator("localhost", 5001);
-// }
-
 Amy.initialize();
 
-//@ts-ignore
-// window.firebaseApp = firebaseApp;
+const theme = createAmyTheme({
+    palette: {
+        primary: {
+            main: "#002566",
+        },
+        secondary: {
+            main: "#808080",
+        },
+    },
+    shape: {
+        borderRadius: 5,
+    },
+    row: {
+        border: "2px solid",
+        borderLeft: "8px solid",
+        padding: "0px 15px",
+    },
+    instructionRow: {
+        color: "#59A6FF",
+    },
+    feedbackRow: {
+        neutralColor: "#59A6FF",
+        positiveColor: "#59A6FF",
+        negativeColor: "#59A6FF",
+    },
+    optionRow: {
+        marginLeft: 10,
+        correctColor: "#FC9854",
+        incorrectColor: "#B3B3B3",
+    },
+    stickyInstruction: true,
+    stickyOption: true,
 
+    props: {
+        MuiGrid: {
+            spacing: 1,
+        },
+    },
+});
 ReactDOM.render(
     <React.StrictMode>
         <CssBaseline />
-        <App />
+        <AppPage
+            logoSrc={"/logo512.png"}
+            login={<AuthSpace />}
+            theme={theme}
+            title={<img src="/logo512.png" style={{ height: "20px" }} />}
+        />
     </React.StrictMode>,
     document.getElementById("root"),
 );
+
+function AuthSpace() {
+    const [token, setToken] = useState("");
+
+    return (
+        <>
+            <TextField
+                value={token}
+                onChange={(e) => {
+                    setToken(e.target.value);
+                }}
+            />
+            <Button
+                variant="outlined"
+                color="primary"
+                disabled={!token}
+                onClick={() => {
+                    // sign in
+                    Amy.signInViaToken({ token }).then(() => {
+                        console.log("Amy is logged in. Wait for the magic to happen!");
+                    });
+                }}
+            >
+                Login
+            </Button>
+        </>
+    );
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

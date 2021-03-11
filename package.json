@@ -3,7 +3,8 @@
     "version": "0.1.0",
     "private": false,
     "dependencies": {
-        "@amy-app/amy-app-js-sdk": "latest",
+        "@amy-app/js-sdk": "latest",
+        "@amy-app/react-components": "latest",
         "@material-ui/core": "latest",
         "@material-ui/icons": "latest",
         "@types/mathjs": "5.0.1",
