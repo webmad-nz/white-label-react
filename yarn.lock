@@ -11,10 +11,10 @@
     orbit-camera-controller "^4.0.0"
     turntable-camera-controller "^3.0.0"
 
-"@amy-app/js-sdk@^1.0.0", "@amy-app/js-sdk@latest":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@amy-app/js-sdk/-/js-sdk-1.0.0.tgz#aa9bda10a9c4417339d1cb171c61237d969c5f57"
-  integrity sha512-BWw25ZOTNhYYhw0QzA/bj2Ya7BRCjBK3uplEV0n+Kesju/26BrzFWpfQxlJnSRSgGGGrlcaSu1vvEhEU5RkhkA==
+"@amy-app/js-sdk@1.0.1", "@amy-app/js-sdk@latest":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@amy-app/js-sdk/-/js-sdk-1.0.1.tgz#4d3d1e6048badf231ea22e6569284ac77f2f52eb"
+  integrity sha512-37bsHDffx11zWJ0vxGOABvt2Y+g+s5wVGUMYvPUPCP4jh9K0wcDhbehAh7BRlfucHU7+oxnRV79IxXE/q6Uo7Q==
   dependencies:
     "@types/sanitize-html" latest
     class-transformer latest
@@ -23,11 +23,11 @@
     sanitize-html latest
 
 "@amy-app/react-components@latest":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@amy-app/react-components/-/react-components-1.0.3.tgz#ae764222ce60c956962fb091b04aa67454383b59"
-  integrity sha512-rZqnTkIu3aU4Nt6toJFsS5y2Mfda2cBdz4AwBoHr9K+EpjBFE9ydTDKLnD3wLOUzXvubfR/SPHvVkHSCG1lkcg==
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@amy-app/react-components/-/react-components-1.0.4.tgz#7f22392392f31f76f8081f01434beb8b22753050"
+  integrity sha512-FUUQezeRp6LWp3A68A4PBBpGD2tOZYOuAMUrfQ5nI/DrueQWbkdQOhBBO743QmQKSXdHSmO2ZB4Y+xj++HAI1Q==
   dependencies:
-    "@amy-app/js-sdk" "^1.0.0"
+    "@amy-app/js-sdk" "1.0.1"
     "@material-ui/core" latest
     "@material-ui/icons" latest
     "@material-ui/lab" latest
@@ -4601,9 +4601,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001181:
-  version "1.0.30001198"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001198.tgz#ed2d9b5f060322ba2efa42afdc56dee3255473f4"
-  integrity sha512-r5GGgESqOPZzwvdLVER374FpQu2WluCF1Z2DSiFJ89KSmGjT0LVKjgv4NcAqHmGWF9ihNpqRI9KXO9Ex4sKsgA==
+  version "1.0.30001199"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001199.tgz#062afccaad21023e2e647d767bac4274b8b8fd7f"
+  integrity sha512-ifbK2eChUCFUwGhlEzIoVwzFt1+iriSjyKKFYNfv6hN34483wyWpLLavYQXhnR036LhkdUYaSDpHg1El++VgHQ==
 
 canvas-fit@^1.5.0:
   version "1.5.0"
@@ -6246,9 +6246,9 @@ ejs@^2.6.1:
   integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
 electron-to-chromium@^1.3.564, electron-to-chromium@^1.3.649:
-  version "1.3.685"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.685.tgz#f636d17c9c232c925f8bbfbff4f86303da091ff9"
-  integrity sha512-C3oFZNkJ8lz85ADqr3hzpjBc2ciejMRN2SCd/D0hwcqpr6MGxfdN/j89VN6l+ERTuCUvhg0VYsf40Q4qTz4bhQ==
+  version "1.3.687"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.687.tgz#c336184b7ab70427ffe2ee79eaeaedbc1ad8c374"
+  integrity sha512-IpzksdQNl3wdgkzf7dnA7/v10w0Utf1dF2L+B4+gKrloBrxCut+au+kky3PYvle3RMdSxZP+UiCZtLbcYRxSNQ==
 
 element-size@^1.1.1:
   version "1.1.1"
@@ -10636,9 +10636,9 @@ nan@^2.12.1:
   integrity sha512-M2ufzIiINKCuDfBSAUr1vWQ+vuVcA9kqx8JJUsbQi6yf1uGRyb7HfpdfUr5qLXf3B/t8dPvcjhKMmlfnP47EzQ==
 
 nanoid@^3.1.20:
-  version "3.1.20"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.20.tgz#badc263c6b1dcf14b71efaa85f6ab4c1d6cfc788"
-  integrity sha512-a1cQNyczgKbLX9jwbS/+d7W8fX/RfgYR7lVWwWOGIPNgK2m0MWvrGF6/m4kk6U3QcFMnZf3RIhL0v2Jgh/0Uxw==
+  version "3.1.21"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.21.tgz#25bfee7340ac4185866fbfb2c9006d299da1be7f"
+  integrity sha512-A6oZraK4DJkAOICstsGH98dvycPr/4GGDH7ZWKmMdd3vGcOurZ6JmWFUt0DA5bzrrn2FrUjmv6mFNWvv8jpppA==
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -10813,9 +10813,9 @@ node-modules-regexp@^1.0.0:
   integrity sha1-jZ2+KJZKSsVxLpExZCEHxx6Q7EA=
 
 node-notifier@^8.0.0:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/node-notifier/-/node-notifier-8.0.1.tgz#f86e89bbc925f2b068784b31f382afdc6ca56be1"
-  integrity sha512-BvEXF+UmsnAfYfoapKM9nGxnP+Wn7P91YfXmrKnfcYCx6VBeoN5Ez5Ogck6I8Bi5k4RlpqRYaw75pAwzX9OphA==
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/node-notifier/-/node-notifier-8.0.2.tgz#f3167a38ef0d2c8a866a83e318c1ba0efeb702c5"
+  integrity sha512-oJP/9NAdd9+x2Q+rfphB2RJCHjod70RcRLjosiPMMu5gjIfwVnOUGq2nbTjTUbmy0DJ/tFIVT30+Qe3nzl4TJg==
   dependencies:
     growly "^1.3.0"
     is-wsl "^2.2.0"
