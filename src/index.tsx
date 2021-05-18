@@ -1,4 +1,4 @@
-import { Amy } from "@amy-app/js-sdk";
+import { Amy, Users } from "@amy-app/js-sdk";
 import { AppPage, createAmyTheme } from "@amy-app/react-components";
 import { Button, CssBaseline, TextField } from "@material-ui/core";
 import "firebase/auth";
@@ -12,52 +12,22 @@ import reportWebVitals from "./reportWebVitals";
 Amy.initialize();
 
 const theme = createAmyTheme({
-    palette: {
-        primary: {
-            main: "#002566",
-        },
-        secondary: {
-            main: "#808080",
-        },
+    header: {
+        logo: `/logo192.png`,
     },
-    shape: {
-        borderRadius: 5,
-    },
-    row: {
-        border: "2px solid",
-        borderLeft: "8px solid",
-        padding: "0px 15px",
-    },
-    instructionRow: {
-        color: "#59A6FF",
-    },
-    feedbackRow: {
-        neutralColor: "#59A6FF",
-        positiveColor: "#59A6FF",
-        negativeColor: "#59A6FF",
-    },
-    optionRow: {
-        marginLeft: 10,
-        correctColor: "#FC9854",
-        incorrectColor: "#B3B3B3",
-    },
-    stickyInstruction: true,
-    stickyOption: true,
-
-    props: {
-        MuiGrid: {
-            spacing: 1,
-        },
+    login: {
+        logo: `/logo512.png`,
     },
 });
 ReactDOM.render(
     <React.StrictMode>
         <CssBaseline />
         <AppPage
-            logoSrc={"/logo512.png"}
-            login={<AuthSpace />}
             theme={theme}
-            title={<img src="/logo512.png" style={{ height: "20px" }} />}
+            login={<AuthSpace />}
+            onLogout={() => {
+                console.log("logout");
+            }}
         />
     </React.StrictMode>,
     document.getElementById("root"),
@@ -80,7 +50,7 @@ function AuthSpace() {
                 disabled={!token}
                 onClick={() => {
                     // sign in
-                    Amy.signInViaToken({ token }).then(() => {
+                    Users.signInViaToken({ token }).then(() => {
                         console.log("Amy is logged in. Wait for the magic to happen!");
                     });
                 }}
