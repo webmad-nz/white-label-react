@@ -45,7 +45,7 @@
     },
     "scripts": {
         "start": "tsc -b && react-scripts start",
-        "build": "tsc -b && react-scripts build",
+        "build": "tsc -b && react-scripts --max_old_space_size=4096 build",
         "test": "jest",
         "eject": "react-scripts eject",
         "publish:gh": "cross-var echo $npm_package_name has no publish:gh",
