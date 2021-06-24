@@ -88,7 +88,7 @@ function AuthSpace() {
                 onClick={() => {
                     // sign in
                     Users.signInViaToken({ token }).then(() => {
-                        console.log("Amy is logged in. Wait for the magic to happen!");
+                        console.log("Amy is logged in. Wait for the magic to happen");
                     });
                 }}
             >
