@@ -1,0 +1,53 @@
+body{
+    background-color: #fff !important;
+}
+#root > span > span:nth-child(1){
+    background: #fff !important;
+    
+}
+header{
+    background-color: #00aeef !important;
+    box-shadow: none !important;
+}
+header .MuiToolbar-root{
+    background: url(assets/imgs/header-bg.jpg) !important;
+    background-position: right !important;
+    background-repeat: no-repeat !important;
+    background-size: 95px !important;
+    padding-right: 85px !important;
+}
+
+header .MuiToolbar-root > a:nth-child(1){
+    display:none !important;
+}
+
+.MuiPaper-root.MuiCard-root{
+    box-shadow: 5px 8px 15px -1px rgb(0 0 0 / 30%) !important;
+}
+
+#root > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center > div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root{
+    background: initial !important;
+    box-shadow:none !important;
+}
+
+#root > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center > div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root > div > div,
+#root > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center > div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root > div > div span,
+#root > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center > div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root > div > div p{
+    color:#333 !important;
+    font-size: 20px !important;
+}
+
+#root > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center > div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4) .MuiCard-root{
+    padding:5px 30px !important;
+}
+
+div[class*="instruction"] div[class*="amymarkdown"],
+div[class*="instruction"] div[class*="amymarkdown"] p,
+div[class*="instruction"] div[class*="amymarkdown"] span {
+    color:#333 !important;
+    font-weight:600 !important;
+}
+
+.MuiButton-label{
+    font-size:22px;
+}

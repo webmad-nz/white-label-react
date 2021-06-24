@@ -14,9 +14,46 @@ Amy.initialize();
 const theme = createAmyTheme({
     header: {
         logo: `/logo192.png`,
+        background: "00aeef",
+        useDarkText: false,
     },
     login: {
         logo: `/logo512.png`,
+    },
+    backdrop: {
+        background: `#ffffff`,
+        fadeBackground: true,
+        useDarkText: false,
+    },
+    feedbackRow: {
+        neutralBackgroundColor: "#ffffff",
+        positiveBackgroundColor: "#22d62b",
+        negativeBackgroundColor: "#d34124",
+    },
+    stickyInstruction: false,
+    shape: {
+        borderRadius: 5,
+    },
+    optionRow: {
+        unknownBackgroundColor: "#FFFFFF",
+        correctBackgroundColor: "#22d62b",
+        incorrectBackgroundColor: "#d34124",
+    },
+    instructionRow: {
+        backgroundColor: "#ffffff",
+    },
+    overrides: {
+        MuiCard: {
+            root: {
+                borderRadius: "100px !important",
+                margin: "5px 0px !important",
+            },
+        },
+        MuiCardHeader: {
+            root: {
+                padding: "5px 40px !important",
+            },
+        },
     },
 });
 ReactDOM.render(
