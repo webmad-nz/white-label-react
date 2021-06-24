@@ -51,7 +51,17 @@ const theme = createAmyTheme({
         },
         MuiCardHeader: {
             root: {
-                padding: "5px 40px !important",
+                padding: "5px 55px !important",
+            },
+        },
+        MuiCardContent: {
+            root: {
+                padding: "10px 55px !important",
+            },
+        },
+        MuiCardActions: {
+            root: {
+                padding: "10px 55px !important",
             },
         },
     },

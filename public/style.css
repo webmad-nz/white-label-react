@@ -48,6 +48,15 @@ div[class*="instruction"] div[class*="amymarkdown"] span {
     font-weight:600 !important;
 }
 
-.MuiButton-label{
-    font-size:22px;
+
+#root > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center > div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4) .MuiCard-root .MuiButton-label{
+    font-size:22px !important;
+} 
+
+.MuiContainer-root > .MuiPaper-root{
+    border-radius: 0px !important;
+}
+
+.MuiCardActionArea-root svg{
+    height: 100%;
 }
