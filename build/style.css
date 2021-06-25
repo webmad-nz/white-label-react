@@ -25,9 +25,13 @@ header .MuiToolbar-root > a:nth-child(1){
     box-shadow: 5px 8px 15px -1px rgb(0 0 0 / 30%) !important;
 }
 
-#root > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center > div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root{
+#root > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center > div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root,
+#root > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center > div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root p,
+#root > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center > div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root span{
     background: initial !important;
     box-shadow:none !important;
+    font-size: 22px !important;
+    font-weight: 600;    
 }
 
 #root > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center > div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root > div > div,
@@ -41,16 +45,20 @@ header .MuiToolbar-root > a:nth-child(1){
     padding:5px 30px !important;
 }
 
-div[class*="instruction"] div[class*="amymarkdown"],
-div[class*="instruction"] div[class*="amymarkdown"] p,
-div[class*="instruction"] div[class*="amymarkdown"] span {
-    color:#333 !important;
-    font-weight:600 !important;
-}
 
-
-#root > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center > div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4) .MuiCard-root .MuiButton-label{
+#root div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4) .MuiGrid-root  .MuiButton-label {
     font-size:22px !important;
+} 
+
+#root div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4) .MuiGrid-root .MuiButton-root {
+    border: none !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+} 
+#root div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4) .MuiGrid-root .MuiButton-root::after {
+    content: '>';
+    padding-left:10px;
+    font-size: 28px;
 } 
 
 .MuiContainer-root > .MuiPaper-root{
@@ -59,4 +67,14 @@ div[class*="instruction"] div[class*="amymarkdown"] span {
 
 .MuiCardActionArea-root svg{
     height: 100%;
+}
+
+div[class*="instruction"] div[class*="amymarkdown"],
+div[class*="instruction"] div[class*="amymarkdown"] p,
+div[class*="instruction"] div[class*="amymarkdown"] span,
+div[class*="feedbackNeutral"] div[class*="amymarkdown"],
+div[class*="feedbackNeutral"] div[class*="amymarkdown"] p,
+div[class*="feedbackNeutral"] div[class*="amymarkdown"] span {
+    color:#333 !important;
+    font-weight:600 !important;
 }
