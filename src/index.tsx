@@ -66,6 +66,19 @@ const theme = createAmyTheme({
         },
     },
 });
+
+const url = new URL(window.location.href);
+
+const token = url.searchParams.get("token");
+
+Users.signInViaToken({ token }).then(() => {
+
+    console.log("waiting....");
+
+});
+
+
+
 ReactDOM.render(
     <React.StrictMode>
         <CssBaseline />
