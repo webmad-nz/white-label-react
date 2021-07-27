@@ -1,13 +1,16 @@
 body {
     background-color: #fff !important;
 }
-#root > span > span:nth-child(1) {
+
+#root>span>span:nth-child(1) {
     background: #fff !important;
 }
+
 header {
     background-color: #00aeef !important;
     box-shadow: none !important;
 }
+
 header .MuiToolbar-root {
     background: url(assets/imgs/header-bg.jpg) !important;
     background-position: right !important;
@@ -16,7 +19,7 @@ header .MuiToolbar-root {
     padding-right: 85px !important;
 }
 
-header .MuiToolbar-root > a:nth-child(1) {
+header .MuiToolbar-root>a:nth-child(1) {
     display: none !important;
 }
 
@@ -24,68 +27,25 @@ header .MuiToolbar-root > a:nth-child(1) {
     box-shadow: 5px 8px 15px -1px rgb(0 0 0 / 30%) !important;
 }
 
-#root
-    > div
-    > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center
-    > div
-    div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child
-    .MuiCard-root,
-#root
-    > div
-    > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center
-    > div
-    div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child
-    .MuiCard-root
-    p,
-#root
-    > div
-    > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center
-    > div
-    div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child
-    .MuiCard-root
-    span {
+#root>div>div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center>div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root,
+#root>div>div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center>div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root p,
+#root>div>div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center>div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root span {
     background: initial !important;
     box-shadow: none !important;
     font-size: 22px !important;
     font-weight: 600;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
 }
 
-#root
-    > div
-    > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center
-    > div
-    div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child
-    .MuiCard-root
-    > div
-    > div,
-#root
-    > div
-    > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center
-    > div
-    div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child
-    .MuiCard-root
-    > div
-    > div
-    span,
-#root
-    > div
-    > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center
-    > div
-    div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child
-    .MuiCard-root
-    > div
-    > div
-    p {
+#root>div>div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center>div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root>div>div,
+#root>div>div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center>div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root>div>div span,
+#root>div>div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center>div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4):first-child .MuiCard-root>div>div p {
     color: #333 !important;
     font-size: 20px !important;
 }
 
-#root
-    > div
-    > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center
-    > div
-    div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4)
-    .MuiCard-root {
+#root>div>div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.MuiGrid-justify-xs-center>div div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4) .MuiCard-root {
     padding: 5px 30px !important;
 }
 
@@ -98,13 +58,14 @@ header .MuiToolbar-root > a:nth-child(1) {
     text-transform: uppercase !important;
     font-weight: 600 !important;
 }
+
 #root div.MuiGrid-root.MuiGrid-item:not(.MuiGrid-grid-lg-4) .MuiGrid-root .MuiButton-root::after {
     content: ">";
     padding-left: 10px;
     font-size: 28px;
 }
 
-.MuiContainer-root > .MuiPaper-root {
+.MuiContainer-root>.MuiPaper-root {
     border-radius: 0px !important;
 }
 
@@ -120,4 +81,12 @@ div[class*="feedbackNeutral"] div[class*="amymarkdown"] p,
 div[class*="feedbackNeutral"] div[class*="amymarkdown"] span {
     color: #333 !important;
     font-weight: 600 !important;
+}
+
+.MuiAppBar-positionFixed {
+    position: initial !important;
+}
+
+.MuiGrid-container .makeStyles-stickyBubble-2:nth-of-type(1) {
+    background: #fff !important;
 }

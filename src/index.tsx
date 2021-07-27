@@ -30,7 +30,7 @@ const theme = createAmyTheme({
         positiveBackgroundColor: "#22d62b",
         negativeBackgroundColor: "#d34124",
     },
-    stickyInstruction: false,
+    stickyInstruction: true,
     shape: {
         borderRadius: 5,
     },
@@ -40,8 +40,9 @@ const theme = createAmyTheme({
         incorrectBackgroundColor: "#d34124",
     },
     instructionRow: {
-        backgroundColor: "#ffffff",
+        backgroundColor: "#fff",
     },
+    stickyOption: false,
     overrides: {
         MuiCard: {
             root: {
